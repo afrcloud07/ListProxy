@@ -4,7 +4,7 @@ on:
   # Baris ini yang memunculkan tombol "Run workflow" di tab Actions
   workflow_dispatch:
   
-  # Jadwal otomatis (setiap 6 jam)
+  # Jadwal otomatis (setiap 2hari 1x)
   schedule:
     - cron: '0 17 */2 * *'
 
