@@ -1,0 +1,52 @@
+name: 🤖 Auto Update Proxy List
+
+on:
+  # Baris ini yang memunculkan tombol "Run workflow" di tab Actions
+  workflow_dispatch:
+  
+  # Jadwal otomatis (setiap 6 jam)
+  schedule:
+    - cron: '0 */6 * * *'
+
+jobs:
+  update-proxy-list:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 2. Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # UBAH 'checker.js' JADI 'proxyip.js' DI SINI JIKA ITU NAMA FILEMU
+      - name: 3. Run Proxy Update Script
+        run: node proxyip.js
+
+      - name: 4. Configure Git
+        run: |
+          git config --global user.name 'GitHub Actions Bot'
+          git config --global user.email 'github-actions-bot@users.noreply.github.com'
+
+      - name: 5. Commit & Push Updated Files
+        run: |
+          # Tambahkan file hasil output
+          git add proxyip.json proxyip.txt proxyip.csv
+          
+          # Cek apakah ada perubahan
+          if ! git diff --cached --quiet; then
+            git commit -m "Update Proxy List [$(date)]"
+            
+            # Tarik perubahan terbaru dulu (rebase) agar tidak error saat push
+            git pull origin main --rebase
+            
+            # Push ke branch main
+            git push origin main
+          else
+            echo "No changes detected, skipping push."
+          fi
