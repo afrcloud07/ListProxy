@@ -6,7 +6,7 @@ on:
   
   # Jadwal otomatis (setiap 6 jam)
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 17 */2 * *'
 
 jobs:
   update-proxy-list:
