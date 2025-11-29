@@ -220,52 +220,79 @@ if (cluster.isPrimary) {
             return `${p.proxy},${p.port},${p.country || 'UNK'},${safeOrg}`; 
         };
 
-        // 1. Save JSON (Output Lama)
-        fs.writeFileSync(CONFIG.files.json, JSON.stringify(activeProxies, null, 2));
-        
-        // Content TXT/CSV (Output Lama)
-        const txtContent = activeProxies.map(formatProxyData).join('\n');
-
-        // 2. Save TXT (Output Lama)
-        fs.writeFileSync(CONFIG.files.txt, txtContent);
-
-        // 3. Save CSV (Output Lama)
-        fs.writeFileSync(CONFIG.files.csv, txtContent);
-
-
-        // --- FITUR BARU: Output per Negara ---
-
-        // Buat folder output jika belum ada
-        if (!fs.existsSync(CONFIG.outputDir)) {
-            fs.mkdirSync(CONFIG.outputDir, { recursive: true });
-            console.log(`${color.gray}Folder output dibuat: ${CONFIG.outputDir}${color.reset}`);
-        }
-
-        // Kelompokkan proxy berdasarkan negara
-        const proxiesByCountry = activeProxies.reduce((acc, p) => {
-            // Gunakan 'UNK' (Unknown) jika country tidak ada
-            const countryCode = (p.country || 'UNK').toUpperCase(); 
-            if (!acc[countryCode]) {
-                acc[countryCode] = [];
-            }
-            acc[countryCode].push(p);
-            return acc;
-        }, {});
-
-        let filesCreated = 0;
-        
-        // Tulis setiap kelompok ke file terpisah
-        for (const countryCode in proxiesByCountry) {
-            const countryProxies = proxiesByCountry[countryCode];
-            const fileContent = countryProxies.map(formatProxyData).join('\n');
-            const filePath = path.join(CONFIG.outputDir, `${countryCode}.txt`);
+        try {
+            // 1. Save JSON (Output Lama)
+            fs.writeFileSync(CONFIG.files.json, JSON.stringify(activeProxies, null, 2));
             
-            fs.writeFileSync(filePath, fileContent);
-            filesCreated++;
-        }
+            // Content TXT/CSV (Output Lama)
+            const txtContent = activeProxies.map(formatProxyData).join('\n');
 
-        console.log(`${color.yellow}Disimpan:${color.reset} ${stats.found} proxies`);
-        console.log(`${color.yellow}Fitur Baru:${color.reset} ${filesCreated} file negara dibuat di folder ${CONFIG.outputDir}`);
+            // 2. Save TXT (Output Lama)
+            fs.writeFileSync(CONFIG.files.txt, txtContent);
+
+            // 3. Save CSV (Output Lama)
+            fs.writeFileSync(CONFIG.files.csv, txtContent);
+
+
+            // --- FITUR BARU: Output per Negara ---
+
+            // Buat folder output jika belum ada
+            if (!fs.existsSync(CONFIG.outputDir)) {
+                fs.mkdirSync(CONFIG.outputDir, { recursive: true });
+                console.log(`${color.gray}Folder output dibuat: ${CONFIG.outputDir}${color.reset}`);
+            }
+
+            // Kelompokkan proxy berdasarkan negara
+            const proxiesByCountry = activeProxies.reduce((acc, p) => {
+                // Gunakan 'UNK' (Unknown) jika country tidak ada
+                const countryCode = (p.country || 'UNK').toUpperCase(); 
+                if (!acc[countryCode]) {
+                    acc[countryCode] = [];
+                }
+                acc[countryCode].push(p);
+                return acc;
+            }, {});
+
+            let filesCreated = 0;
+            
+            // Tulis setiap kelompok ke file terpisah
+            for (const countryCode in proxiesByCountry) {
+                const countryProxies = proxiesByCountry[countryCode];
+                const fileContent = countryProxies.map(formatProxyData).join('\n');
+                const filePath = path.join(CONFIG.outputDir, `${countryCode}.txt`);
+                
+                fs.writeFileSync(filePath, fileContent);
+                filesCreated++;
+            }
+
+            console.log(`${color.yellow}Disimpan:${color.reset} ${stats.found} proxies`);
+            
+            // Tambahkan pesan jika tidak ada proxy yang ditemukan
+            if (activeProxies.length === 0) {
+                 console.log(`${color.red}[PERINGATAN] Tidak ada proxy aktif yang ditemukan, sehingga tidak ada file negara yang dibuat.${color.reset}`);
+            } else {
+                 console.log(`${color.yellow}Fitur Baru:${color.reset} ${filesCreated} file negara dibuat di folder ${CONFIG.outputDir}`);
+            }
+
+        } catch (e) {
+            // Menangkap dan melaporkan kesalahan file system secara spesifik
+            console.error(`\n${color.red}[ERROR FILE SYSTEM] Gagal menyimpan file output!${color.reset}`);
+            console.error(`${color.red}Pesan Error:${color.reset} ${e.message}`);
+            console.error(`${color.red}Cek izin (permissions) atau path direktori Anda: ${path.resolve('.')}${color.reset}`);
+            
+            // --- INSTRUKSI GIT BARU DITAMBAHKAN DI SINI ---
+            console.log(`\n${color.cyan}================================================================${color.reset}`);
+            console.log(`${color.cyan}LANGKAH BERIKUTNYA UNTUK GITHUB${color.reset}`);
+            console.log(`================================================================`);
+            console.log(`Jika Anda menjalankan skrip ini di CI/lokal dan ingin melihat hasilnya di GitHub,`);
+            console.log(`Anda harus menambahkan dan melakukan commit file output:`);
+            console.log(`\n${color.bright}$ git add ${CONFIG.outputDir}${color.reset}`);
+            console.log(`${color.bright}$ git add ${CONFIG.files.json} ${CONFIG.files.txt} ${CONFIG.files.csv}${color.reset}`);
+            console.log(`${color.bright}$ git commit -m "Update hasil proxy check"${color.reset}`);
+            console.log(`${color.bright}$ git push${color.reset}`);
+            console.log(`================================================================${color.reset}`);
+        }
+        
         process.exit(0);
     }
 
