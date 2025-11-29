@@ -36,7 +36,7 @@ jobs:
       - name: 5. Commit & Push Updated Files
         run: |
           # Tambahkan file hasil output
-          git add proxyip.json proxyip.txt proxyip.csv
+          git add proxyip.json proxyip.txt proxyip.csv active_proxies
           
           # Cek apakah ada perubahan
           if ! git diff --cached --quiet; then
