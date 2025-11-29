@@ -3,12 +3,14 @@ const cluster = require("node:cluster");
 const fs = require("node:fs");
 const os = require("node:os");
 const net = require("node:net");
+const path = require("node:path"); // Tambahkan path untuk manipulasi direktori/file
 
 // --- KONFIGURASI ---
 const CONFIG = {
     concurrency: 200,    // Jumlah cek bersamaan per core
     timeout: 3500,       // Timeout dalam ms
     batchSize: 50,       // Worker melapor ke Master setiap 50 proxy
+    outputDir: 'active_proxies', // Folder output baru
     files: {
         json: 'proxyip.json',
         txt: 'proxyip.txt',
@@ -211,20 +213,59 @@ if (cluster.isPrimary) {
         
         console.log(`\n${color.green}Scan Selesai!${color.reset}`);
         
-        // 1. Save JSON
+        // Fungsi untuk membersihkan dan memformat data proxy
+        const formatProxyData = (p) => {
+            const safeOrg = cleanOrg(p.asOrganization);
+            // Menggunakan format yang sama: ip,port,country,org
+            return `${p.proxy},${p.port},${p.country || 'UNK'},${safeOrg}`; 
+        };
+
+        // 1. Save JSON (Output Lama)
         fs.writeFileSync(CONFIG.files.json, JSON.stringify(activeProxies, null, 2));
         
-        // 2. Save TXT
-        const txtContent = activeProxies.map(p => {
-            const safeOrg = cleanOrg(p.asOrganization);
-            return `${p.proxy},${p.port},${p.country || 'UNK'},${safeOrg}`;
-        }).join('\n');
+        // Content TXT/CSV (Output Lama)
+        const txtContent = activeProxies.map(formatProxyData).join('\n');
+
+        // 2. Save TXT (Output Lama)
         fs.writeFileSync(CONFIG.files.txt, txtContent);
 
-        // 3. Save CSV
+        // 3. Save CSV (Output Lama)
         fs.writeFileSync(CONFIG.files.csv, txtContent);
 
+
+        // --- FITUR BARU: Output per Negara ---
+
+        // Buat folder output jika belum ada
+        if (!fs.existsSync(CONFIG.outputDir)) {
+            fs.mkdirSync(CONFIG.outputDir, { recursive: true });
+            console.log(`${color.gray}Folder output dibuat: ${CONFIG.outputDir}${color.reset}`);
+        }
+
+        // Kelompokkan proxy berdasarkan negara
+        const proxiesByCountry = activeProxies.reduce((acc, p) => {
+            // Gunakan 'UNK' (Unknown) jika country tidak ada
+            const countryCode = (p.country || 'UNK').toUpperCase(); 
+            if (!acc[countryCode]) {
+                acc[countryCode] = [];
+            }
+            acc[countryCode].push(p);
+            return acc;
+        }, {});
+
+        let filesCreated = 0;
+        
+        // Tulis setiap kelompok ke file terpisah
+        for (const countryCode in proxiesByCountry) {
+            const countryProxies = proxiesByCountry[countryCode];
+            const fileContent = countryProxies.map(formatProxyData).join('\n');
+            const filePath = path.join(CONFIG.outputDir, `${countryCode}.txt`);
+            
+            fs.writeFileSync(filePath, fileContent);
+            filesCreated++;
+        }
+
         console.log(`${color.yellow}Disimpan:${color.reset} ${stats.found} proxies`);
+        console.log(`${color.yellow}Fitur Baru:${color.reset} ${filesCreated} file negara dibuat di folder ${CONFIG.outputDir}`);
         process.exit(0);
     }
 
@@ -318,6 +359,7 @@ if (cluster.isPrimary) {
             const startTime = Date.now();
             
             try {
+                // Menggunakan tls.connect untuk cek HTTPS
                 socket = tls.connect({
                     host: host,
                     port: portNum,
@@ -325,19 +367,24 @@ if (cluster.isPrimary) {
                     rejectUnauthorized: false,
                     timeout: CONFIG.timeout 
                 }, () => {
+                    // Permintaan HTTP/1.1 sederhana untuk mendapatkan metadata
                     socket.write(`GET /meta HTTP/1.1\r\nHost: speed.cloudflare.com\r\nUser-Agent: Mozilla/5.0\r\nConnection: close\r\n\r\n`);
                 });
 
                 let data = '';
                 socket.on('data', (chunk) => {
                     data += chunk.toString();
+                    // Cek apakah header dan body sudah selesai (dipisahkan oleh \r\n\r\n)
                     if (data.includes('\r\n\r\n')) {
                         const latency = Date.now() - startTime;
                         try {
                             const bodyParts = data.split('\r\n\r\n');
-                            const body = bodyParts[1];
+                            const body = bodyParts.pop(); // Ambil bagian body terakhir
                             if (body) {
-                                const info = JSON.parse(body);
+                                // Menghapus byte-byte chunked transfer-encoding yang mungkin ada
+                                const cleanedBody = body.replace(/^[0-9a-fA-F]+\r\n/, '').replace(/\r\n[0-9a-fA-F]+\r\n$/, '');
+                                const info = JSON.parse(cleanedBody);
+                                
                                 if (isValid(info, myip)) {
                                     const { clientIp, ...rest } = info;
                                     done({
@@ -351,8 +398,10 @@ if (cluster.isPrimary) {
                                     return;
                                 }
                             }
-                        } catch (e) {}
-                        done(null);
+                        } catch (e) {
+                            // Tangani error parsing JSON atau format tak terduga
+                        }
+                        done(null); // Gagal jika tidak valid atau error parsing
                     }
                 });
 
