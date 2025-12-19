@@ -3,12 +3,12 @@ const cluster = require("node:cluster");
 const fs = require("node:fs");
 const os = require("node:os");
 const net = require("node:net");
-const path = require("node:path"); // Tambahkan path untuk manipulasi direktori/file
+const path = require("node:path");
 
 // --- KONFIGURASI ---
 const CONFIG = {
     concurrency: 200,    // Jumlah cek bersamaan per core
-    timeout: 3500,       // Timeout dalam ms
+    timeout: 5000,       // Timeout sedikit dinaikkan untuk TLS Handshake
     batchSize: 50,       // Worker melapor ke Master setiap 50 proxy
     outputDir: 'active_proxies', // Folder output baru
     files: {
@@ -82,7 +82,6 @@ if (cluster.isPrimary) {
         const remaining = stats.total - stats.checked;
         const etaSec = stats.speed > 0 ? remaining / stats.speed : 0;
         
-        // --- MODE TTY (Laptop/VPS - Animasi Keren) ---
         if (isTTY) {
             const width = 20; 
             const filled = Math.round((width * pct) / 100);
@@ -98,10 +97,7 @@ if (cluster.isPrimary) {
             const output = `\r${spin}  ${barStr}  ${statusPct}  |  ${statusFound}  |  ${statusSpeed}  |  ${statusEta}  |  ${statusCheck}`;
             process.stdout.write(output);
             animationFrame = (animationFrame + 1) % spinner.length;
-        } 
-        // --- MODE CI (GitHub Actions - Log Sederhana) ---
-        else {
-            // Log hanya setiap 5 detik agar tidak membanjiri log file
+        } else {
             if (now - lastLogTime > 5000) {
                 console.log(`[PROGRESS] ${pct}% | Checked: ${stats.checked}/${stats.total} | Found: ${stats.found} | Speed: ${stats.speed}/s | ETA: ${formatDuration(etaSec * 1000)}`);
                 lastLogTime = now;
@@ -111,21 +107,20 @@ if (cluster.isPrimary) {
 
     function printFound(p) {
         const latencyColor = p.latency < 200 ? color.green : (p.latency < 1000 ? color.yellow : color.red);
-        const logMsg = `${color.cyan}[+]${color.reset} ${p.proxy}:${p.port.padEnd(5)}  ${color.magenta}${p.country}${color.reset}  ${latencyColor}${p.latency}ms${color.reset}  ${color.dim}${cleanOrg(p.asOrganization).substring(0, 20)}${color.reset}`;
+        // Sekarang kita punya data asOrganization dari endpoint /meta
+        const orgInfo = p.asOrganization ? cleanOrg(p.asOrganization).substring(0, 20) : "Unknown Org";
+        const logMsg = `${color.cyan}[+]${color.reset} ${p.proxy}:${p.port.padEnd(5)}  ${color.magenta}${p.country}${color.reset}  ${latencyColor}${p.latency}ms${color.reset}  ${color.dim}${orgInfo}${color.reset}`;
 
         if (isTTY) {
-            // Hapus baris progress, print log, gambar ulang progress
             process.stdout.clearLine(0);
             process.stdout.cursorTo(0);
             console.log(logMsg);
             drawProgress();
         } else {
-            // Mode CI: Langsung print saja
             console.log(logMsg);
         }
     }
 
-    // Fungsi Load Proxy
     function loadProxies() {
         if (!fs.existsSync(CONFIG.files.input)) {
             console.error(`${color.red}[ERROR] File ${CONFIG.files.input} not found!${color.reset}`);
@@ -141,21 +136,49 @@ if (cluster.isPrimary) {
         }
     }
 
+    // UPDATE: getMyIP menggunakan teknik Raw TLS yang sama dengan script Express
+    // agar IP pembandingnya akurat
     async function getMyIP() {
-        try {
-            const res = await fetch("https://speed.cloudflare.com/meta", { signal: AbortSignal.timeout(5000) });
-            const data = await res.json();
-            return data.clientIp;
-        } catch {
-            return "0.0.0.0";
-        }
+        return new Promise((resolve) => {
+            const socket = tls.connect({
+                host: 'speed.cloudflare.com',
+                port: 443,
+                servername: 'speed.cloudflare.com',
+                rejectUnauthorized: false
+            }, () => {
+                socket.write(`GET /meta HTTP/1.1\r\nHost: speed.cloudflare.com\r\nUser-Agent: Mozilla/5.0\r\nConnection: close\r\n\r\n`);
+            });
+
+            let data = '';
+            socket.on('data', chunk => data += chunk.toString());
+            
+            socket.on('end', () => {
+                try {
+                    const body = data.split('\r\n\r\n')[1];
+                    if (body) {
+                        const json = JSON.parse(body);
+                        resolve(json.clientIp);
+                    } else {
+                        throw new Error("Empty body");
+                    }
+                } catch(e) {
+                    // Fallback jika gagal parse / koneksi
+                    resolve("0.0.0.0");
+                }
+            });
+
+            socket.on('error', () => resolve("0.0.0.0"));
+            socket.setTimeout(5000, () => {
+                socket.destroy();
+                resolve("0.0.0.0");
+            });
+        });
     }
 
     (async () => {
-        // Clear screen hanya jika TTY
         if (isTTY) process.stdout.write('\x1b[2J\x1b[0f');
         
-        console.log(`${color.bgBlue}${color.white}${color.bright}  ⚡ PROXY CHECKER PRO  ${color.reset}\n`);
+        console.log(`${color.bgBlue}${color.white}${color.bright}  ⚡ PROXY CHECKER PRO (Meta Mode)  ${color.reset}\n`);
 
         const myip = await getMyIP();
         const allProxies = loadProxies();
@@ -165,9 +188,6 @@ if (cluster.isPrimary) {
         console.log(`Environment: ${isTTY ? 'Terminal (Interactive)' : 'CI/Background (Log Mode)'}\n`);
 
         const chunkSize = Math.ceil(stats.total / numCPUs);
-        
-        // Interval update UI
-        // Jika TTY update cepat (100ms), jika CI update lambat via drawProgress logic
         const updateRate = isTTY ? 100 : 1000;
         const uiInterval = setInterval(() => drawProgress(), updateRate);
 
@@ -180,7 +200,6 @@ if (cluster.isPrimary) {
             worker.on('message', (msg) => {
                 if (msg.type === 'BATCH_UPDATE') {
                     stats.checked += msg.checkedCount;
-                    
                     if (msg.foundProxies && msg.foundProxies.length > 0) {
                         stats.found += msg.foundProxies.length;
                         msg.foundProxies.forEach(p => {
@@ -213,86 +232,45 @@ if (cluster.isPrimary) {
         
         console.log(`\n${color.green}Scan Selesai!${color.reset}`);
         
-        // Fungsi untuk membersihkan dan memformat data proxy
         const formatProxyData = (p) => {
             const safeOrg = cleanOrg(p.asOrganization);
-            // Menggunakan format yang sama: ip,port,country,org
             return `${p.proxy},${p.port},${p.country || 'UNK'},${safeOrg}`; 
         };
 
         try {
-            // 1. Save JSON (Output Lama)
             fs.writeFileSync(CONFIG.files.json, JSON.stringify(activeProxies, null, 2));
-            
-            // Content TXT/CSV (Output Lama)
             const txtContent = activeProxies.map(formatProxyData).join('\n');
-
-            // 2. Save TXT (Output Lama)
             fs.writeFileSync(CONFIG.files.txt, txtContent);
-
-            // 3. Save CSV (Output Lama)
             fs.writeFileSync(CONFIG.files.csv, txtContent);
 
-
-            // --- FITUR BARU: Output per Negara ---
-
-            // Buat folder output jika belum ada
             if (!fs.existsSync(CONFIG.outputDir)) {
                 fs.mkdirSync(CONFIG.outputDir, { recursive: true });
-                console.log(`${color.gray}Folder output dibuat: ${CONFIG.outputDir}${color.reset}`);
             }
 
-            // Kelompokkan proxy berdasarkan negara
             const proxiesByCountry = activeProxies.reduce((acc, p) => {
-                // Gunakan 'UNK' (Unknown) jika country tidak ada
                 const countryCode = (p.country || 'UNK').toUpperCase(); 
-                if (!acc[countryCode]) {
-                    acc[countryCode] = [];
-                }
+                if (!acc[countryCode]) acc[countryCode] = [];
                 acc[countryCode].push(p);
                 return acc;
             }, {});
 
             let filesCreated = 0;
-            
-            // Tulis setiap kelompok ke file terpisah
             for (const countryCode in proxiesByCountry) {
-                const countryProxies = proxiesByCountry[countryCode];
-                const fileContent = countryProxies.map(formatProxyData).join('\n');
                 const filePath = path.join(CONFIG.outputDir, `${countryCode}.txt`);
-                
+                const fileContent = proxiesByCountry[countryCode].map(formatProxyData).join('\n');
                 fs.writeFileSync(filePath, fileContent);
                 filesCreated++;
             }
 
             console.log(`${color.yellow}Disimpan:${color.reset} ${stats.found} proxies`);
-            
-            // Tambahkan pesan jika tidak ada proxy yang ditemukan
-            if (activeProxies.length === 0) {
-                 console.log(`${color.red}[PERINGATAN] Tidak ada proxy aktif yang ditemukan, sehingga tidak ada file negara yang dibuat.${color.reset}`);
-            } else {
+            if (activeProxies.length > 0) {
                  console.log(`${color.yellow}Fitur Baru:${color.reset} ${filesCreated} file negara dibuat di folder ${CONFIG.outputDir}`);
             }
 
         } catch (e) {
-            // Menangkap dan melaporkan kesalahan file system secara spesifik
             console.error(`\n${color.red}[ERROR FILE SYSTEM] Gagal menyimpan file output!${color.reset}`);
             console.error(`${color.red}Pesan Error:${color.reset} ${e.message}`);
-            console.error(`${color.red}Cek izin (permissions) atau path direktori Anda: ${path.resolve('.')}${color.reset}`);
-            
-            // --- INSTRUKSI GIT BARU DITAMBAHKAN DI SINI ---
-            console.log(`\n${color.cyan}================================================================${color.reset}`);
-            console.log(`${color.cyan}LANGKAH BERIKUTNYA UNTUK GITHUB${color.reset}`);
-            console.log(`================================================================`);
-            console.log(`Jika Anda menjalankan skrip ini di CI/lokal dan ingin melihat hasilnya di GitHub,`);
-            console.log(`Anda harus menambahkan dan melakukan commit file output:`);
-            console.log(`\n${color.bright}$ git add ${CONFIG.outputDir}${color.reset}`);
-            console.log(`${color.bright}$ git add ${CONFIG.files.json} ${CONFIG.files.txt} ${CONFIG.files.csv}${color.reset}`);
-            console.log(`${color.bright}$ git commit -m "Update hasil proxy check"${color.reset}`);
-            console.log(`${color.bright}$ git push${color.reset}`);
-            console.log(`================================================================${color.reset}`);
         }
-        
         process.exit(0);
     }
 
@@ -312,7 +290,6 @@ if (cluster.isPrimary) {
         let pendingChecked = 0;
         let pendingFound = [];
 
-        // Lapor ke Master setiap 500ms
         const reportInterval = setInterval(() => {
             if (pendingChecked > 0) {
                 if (process.connected) {
@@ -361,6 +338,7 @@ if (cluster.isPrimary) {
         });
     }
 
+    // UPDATE: Implementasi cek proxy menggunakan Raw TLS ke speed.cloudflare.com/meta
     function checkProxy(proxyStr, myip) {
         return new Promise((resolve) => {
             const [host, port] = proxyStr.split(':');
@@ -376,75 +354,74 @@ if (cluster.isPrimary) {
                 if (!hasResolved) {
                     hasResolved = true;
                     if (timer) clearTimeout(timer);
-                    if (socket) socket.destroy();
+                    if (socket && !socket.destroyed) socket.destroy();
                     resolve(res);
                 }
             };
 
             timer = setTimeout(() => done(null), CONFIG.timeout);
-
             const startTime = Date.now();
             
             try {
-                // Menggunakan tls.connect untuk cek HTTPS
+                // Koneksi Raw TLS ke Proxy (seperti di script Express)
                 socket = tls.connect({
-                    host: host,
-                    port: portNum,
-                    servername: 'speed.cloudflare.com',
-                    rejectUnauthorized: false,
+                    host: host, // Connect ke Proxy IP
+                    port: portNum, // Connect ke Proxy Port
+                    servername: 'speed.cloudflare.com', // SNI target
+                    rejectUnauthorized: false, // Abaikan validasi SSL proxy
                     timeout: CONFIG.timeout 
                 }, () => {
-                    // Permintaan HTTP/1.1 sederhana untuk mendapatkan metadata
-                    socket.write(`GET /meta HTTP/1.1\r\nHost: speed.cloudflare.com\r\nUser-Agent: Mozilla/5.0\r\nConnection: close\r\n\r\n`);
+                    // Manual HTTP Request String
+                    const request = `GET /meta HTTP/1.1\r\n` +
+                                    `Host: speed.cloudflare.com\r\n` +
+                                    `User-Agent: Mozilla/5.0\r\n` +
+                                    `Connection: close\r\n\r\n`;
+                    socket.write(request);
                 });
 
-                let data = '';
-                socket.on('data', (chunk) => {
-                    data += chunk.toString();
-                    // Cek apakah header dan body sudah selesai (dipisahkan oleh \r\n\r\n)
-                    if (data.includes('\r\n\r\n')) {
-                        const latency = Date.now() - startTime;
-                        try {
-                            const bodyParts = data.split('\r\n\r\n');
-                            const body = bodyParts.pop(); // Ambil bagian body terakhir
-                            if (body) {
-                                // Menghapus byte-byte chunked transfer-encoding yang mungkin ada
-                                const cleanedBody = body.replace(/^[0-9a-fA-F]+\r\n/, '').replace(/\r\n[0-9a-fA-F]+\r\n$/, '');
-                                const info = JSON.parse(cleanedBody);
-                                
-                                if (isValid(info, myip)) {
-                                    const { clientIp, ...rest } = info;
-                                    done({
-                                        proxy: host,
-                                        port: port,
-                                        ip: clientIp,
-                                        latency,
-                                        proxyip: true,
-                                        ...rest
-                                    });
-                                    return;
-                                }
+                let responseBody = '';
+                socket.on('data', (data) => {
+                    responseBody += data.toString();
+                });
+
+                socket.on('end', () => {
+                    const latency = Date.now() - startTime;
+                    try {
+                        // Pisahkan Header dan Body
+                        const parts = responseBody.split('\r\n\r\n');
+                        // Ambil bagian body (index 1), jika tidak ada split, mungkin data raw JSON
+                        const body = parts.length > 1 ? parts[1] : parts[0];
+                        
+                        if (body && body.trim().startsWith('{')) {
+                            const info = JSON.parse(body);
+                            
+                            // Validasi: IP harus ada dan berbeda dengan IP asli server
+                            if (info && info.clientIp && info.clientIp !== myip) {
+                                done({
+                                    proxy: host,
+                                    port: port,
+                                    ip: info.clientIp,
+                                    latency,
+                                    country: info.country,
+                                    asOrganization: info.asOrganization, // Mengambil nama ISP
+                                    city: info.city,
+                                    colo: info.colo
+                                });
+                                return;
                             }
-                        } catch (e) {
-                            // Tangani error parsing JSON atau format tak terduga
                         }
-                        done(null); // Gagal jika tidak valid atau error parsing
+                    } catch (e) {
+                        // JSON Parse error atau format tidak sesuai
                     }
+                    done(null);
                 });
 
                 socket.on('error', () => done(null));
-                socket.on('end', () => done(null));
                 socket.on('timeout', () => done(null));
 
             } catch (err) {
                 done(null);
             }
         });
-    }
-
-    function isValid(info, myip) {
-        if (!info || !info.colo) return false;
-        if (info.clientIp === myip) return false;
-        return true; 
     }
 }
