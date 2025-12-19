@@ -136,33 +136,27 @@ if (cluster.isPrimary) {
         }
     }
 
-    // UPDATE: getMyIP menggunakan teknik Raw TLS yang sama dengan script Express
-    // agar IP pembandingnya akurat
+    // UPDATE: Menggunakan /cdn-cgi/trace untuk getMyIP agar lebih stabil (menghindari "IP: undefined")
     async function getMyIP() {
         return new Promise((resolve) => {
             const socket = tls.connect({
-                host: 'speed.cloudflare.com',
+                host: '1.1.1.1',
                 port: 443,
-                servername: 'speed.cloudflare.com',
+                servername: 'one.one.one.one',
                 rejectUnauthorized: false
             }, () => {
-                socket.write(`GET /meta HTTP/1.1\r\nHost: speed.cloudflare.com\r\nUser-Agent: Mozilla/5.0\r\nConnection: close\r\n\r\n`);
+                socket.write(`GET /cdn-cgi/trace HTTP/1.1\r\nHost: one.one.one.one\r\nUser-Agent: Mozilla/5.0\r\nConnection: close\r\n\r\n`);
             });
 
             let data = '';
             socket.on('data', chunk => data += chunk.toString());
             
             socket.on('end', () => {
-                try {
-                    const body = data.split('\r\n\r\n')[1];
-                    if (body) {
-                        const json = JSON.parse(body);
-                        resolve(json.clientIp);
-                    } else {
-                        throw new Error("Empty body");
-                    }
-                } catch(e) {
-                    // Fallback jika gagal parse / koneksi
+                // Parsing ip=... dari trace
+                const match = data.match(/ip=(.+)/);
+                if (match && match[1]) {
+                    resolve(match[1].trim());
+                } else {
                     resolve("0.0.0.0");
                 }
             });
@@ -372,9 +366,12 @@ if (cluster.isPrimary) {
                     timeout: CONFIG.timeout 
                 }, () => {
                     // Manual HTTP Request String
+                    // UPDATE: Menambahkan Header Accept agar Cloudflare lebih bersahabat dan return JSON
                     const request = `GET /meta HTTP/1.1\r\n` +
                                     `Host: speed.cloudflare.com\r\n` +
-                                    `User-Agent: Mozilla/5.0\r\n` +
+                                    `User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\r\n` +
+                                    `Accept: application/json,text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8\r\n` +
+                                    `Accept-Language: en-US,en;q=0.5\r\n` +
                                     `Connection: close\r\n\r\n`;
                     socket.write(request);
                 });
@@ -389,13 +386,13 @@ if (cluster.isPrimary) {
                     try {
                         // Pisahkan Header dan Body
                         const parts = responseBody.split('\r\n\r\n');
-                        // Ambil bagian body (index 1), jika tidak ada split, mungkin data raw JSON
                         const body = parts.length > 1 ? parts[1] : parts[0];
                         
                         if (body && body.trim().startsWith('{')) {
                             const info = JSON.parse(body);
                             
                             // Validasi: IP harus ada dan berbeda dengan IP asli server
+                            // Note: myip bisa saja 0.0.0.0 jika getMyIP gagal, tapi setidaknya info.clientIp harus ada
                             if (info && info.clientIp && info.clientIp !== myip) {
                                 done({
                                     proxy: host,
