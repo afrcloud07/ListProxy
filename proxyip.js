@@ -7,9 +7,9 @@ const path = require("node:path");
 
 // --- KONFIGURASI ---
 const CONFIG = {
-    concurrency: 50,     // Disesuaikan agar lebih stabil (mirip script anda: 30-50)
-    timeout: 5000,       // Timeout standar 5 detik
-    batchSize: 20,       // Update UI lebih sering
+    concurrency: 200,    // KEMBALI KE 200 (Kecepatan Tinggi sesuai script pertama)
+    timeout: 3500,       // Timeout 3.5 detik (Sesuai script pertama)
+    batchSize: 50,       // Batch size 50 (Sesuai script pertama)
     outputDir: 'active_proxies', 
     files: {
         json: 'proxyip.json',
@@ -70,6 +70,7 @@ if (cluster.isPrimary) {
     const spinner = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
     let lastLogTime = 0;
 
+    // FUNGSI LOGGING/UI (Dikembalikan persis seperti script pertama)
     function drawProgress() {
         const now = Date.now();
         const elapsed = (now - startTime) / 1000;
@@ -79,6 +80,7 @@ if (cluster.isPrimary) {
         const remaining = stats.total - stats.checked;
         const etaSec = stats.speed > 0 ? remaining / stats.speed : 0;
         
+        // --- MODE TTY (Tampilan Keren dengan Progress Bar) ---
         if (isTTY) {
             const width = 20; 
             const filled = Math.round((width * pct) / 100);
@@ -94,7 +96,9 @@ if (cluster.isPrimary) {
             const output = `\r${spin}  ${barStr}  ${statusPct}  |  ${statusFound}  |  ${statusSpeed}  |  ${statusEta}  |  ${statusCheck}`;
             process.stdout.write(output);
             animationFrame = (animationFrame + 1) % spinner.length;
-        } else {
+        } 
+        // --- MODE CI (Log Sederhana agar tidak spam) ---
+        else {
             if (now - lastLogTime > 5000) {
                 console.log(`[PROGRESS] ${pct}% | Checked: ${stats.checked}/${stats.total} | Found: ${stats.found} | Speed: ${stats.speed}/s | ETA: ${formatDuration(etaSec * 1000)}`);
                 lastLogTime = now;
@@ -132,7 +136,7 @@ if (cluster.isPrimary) {
         }
     }
 
-    // UPDATE: Menggunakan metode fetch + Referer persis seperti script yang bekerja
+    // UPDATE: Menggunakan fetch + Referer (Sesuai script yang berfungsi)
     async function getMyIP() {
         try {
             const response = await fetch("https://speed.cloudflare.com/meta", { 
@@ -224,7 +228,7 @@ if (cluster.isPrimary) {
             fs.writeFileSync(CONFIG.files.txt, txtContent);
             fs.writeFileSync(CONFIG.files.csv, txtContent);
 
-            // Save per Country (Feature retained)
+            // Save per Country (Fitur retained)
             if (!fs.existsSync(CONFIG.outputDir)) {
                 fs.mkdirSync(CONFIG.outputDir, { recursive: true });
             }
@@ -322,7 +326,8 @@ if (cluster.isPrimary) {
         });
     }
 
-    // UPDATE: Implementasi checkProxy menggunakan logika PERSIS dari script yang bekerja
+    // UPDATE: Implementasi checkProxy menggunakan logika PERSIS dari script yang berfungsi
+    // Raw TLS + Referer Header + Robust Parsing
     function checkProxy(proxyStr, myip) {
         return new Promise((resolve) => {
             const [host, port] = proxyStr.split(':');
@@ -351,8 +356,7 @@ if (cluster.isPrimary) {
                     rejectUnauthorized: false, 
                     timeout: CONFIG.timeout 
                 }, () => {
-                    // CRITICAL UPDATE: Menambahkan Header "Referer" seperti script yang bekerja
-                    // Ini kunci agar tidak diblokir Cloudflare dan mendapat respons JSON valid
+                    // HEADER WAJIB: Referer
                     const request = `GET /meta HTTP/1.1\r\n` +
                                     `Host: speed.cloudflare.com\r\n` +
                                     `User-Agent: Mozilla/5.0\r\n` +
@@ -369,18 +373,16 @@ if (cluster.isPrimary) {
                 socket.on('end', () => {
                     const latency = Date.now() - startTime;
                     try {
-                        // LOGIKA PARSING PERSIS SCRIPT USER:
-                        // Split berdasarkan double CRLF untuk memisahkan header dan body
+                        // LOGIKA PARSING ROBUST
                         const parts = data.split('\r\n\r\n');
                         const body = parts.length > 1 ? parts.slice(1).join('\r\n\r\n') : parts[0];
                         
                         if (body) {
                             let info;
                             try {
-                                // Coba parse langsung (berhasil di script user)
                                 info = JSON.parse(body);
                             } catch (e) {
-                                // Fallback: kadang ada sisa chunked encoding, ambil antara { dan }
+                                // Fallback jika format chunked encoding berantakan
                                 const first = body.indexOf('{');
                                 const last = body.lastIndexOf('}');
                                 if (first !== -1 && last !== -1) {
@@ -389,8 +391,6 @@ if (cluster.isPrimary) {
                             }
                             
                             if (info && info.clientIp && info.clientIp !== myip) {
-                                // NOTE: Di script user ada filter COLO (Asia/ME). 
-                                // Di sini saya tidak memfilter agar menangkap SEMUA proxy yang hidup.
                                 done({
                                     proxy: host,
                                     port: port,
