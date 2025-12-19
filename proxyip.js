@@ -7,9 +7,9 @@ const path = require("node:path");
 
 // --- KONFIGURASI ---
 const CONFIG = {
-    concurrency: 200,    // KEMBALI KE 200 (Kecepatan Tinggi sesuai script pertama)
-    timeout: 3500,       // Timeout 3.5 detik (Sesuai script pertama)
-    batchSize: 50,       // Batch size 50 (Sesuai script pertama)
+    concurrency: 50,     // DITURUNKAN: 50 per core (Total ~200 thread jika 4 core). Lebih lambat tapi AKURAT.
+    timeout: 3500,       // DINAIKKAN: 5 detik. Memberi waktu proxy lambat untuk merespons.
+    batchSize: 50,       // Worker melapor ke Master setiap 50 proxy
     outputDir: 'active_proxies', 
     files: {
         json: 'proxyip.json',
@@ -107,17 +107,9 @@ if (cluster.isPrimary) {
     }
 
     function printFound(p) {
-        const latencyColor = p.latency < 200 ? color.green : (p.latency < 1000 ? color.yellow : color.red);
-        const orgInfo = p.asOrganization ? cleanOrg(p.asOrganization).substring(0, 20) : "Unknown Org";
-        const logMsg = `${color.cyan}[+]${color.reset} ${p.proxy}:${p.port.padEnd(5)}  ${color.magenta}${p.country}${color.reset}  ${latencyColor}${p.latency}ms${color.reset}  ${color.dim}${orgInfo}${color.reset}`;
-
+        // MODE SIMPLE: Tidak menampilkan log detail per IP, hanya update progress bar
         if (isTTY) {
-            process.stdout.clearLine(0);
-            process.stdout.cursorTo(0);
-            console.log(logMsg);
-            drawProgress();
-        } else {
-            console.log(logMsg);
+            drawProgress(); // Paksa update UI agar counter Found langsung berubah
         }
     }
 
@@ -160,7 +152,7 @@ if (cluster.isPrimary) {
     (async () => {
         if (isTTY) process.stdout.write('\x1b[2J\x1b[0f');
         
-        console.log(`${color.bgBlue}${color.white}${color.bright}  ⚡ PROXY CHECKER PRO (Final Fix)  ${color.reset}\n`);
+        console.log(`${color.bgBlue}${color.white}${color.bright}  ⚡ PROXY CHECKER PRO (Balanced Mode)  ${color.reset}\n`);
 
         const myip = await getMyIP();
         const allProxies = loadProxies();
