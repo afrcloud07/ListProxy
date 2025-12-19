@@ -353,25 +353,24 @@ if (cluster.isPrimary) {
                 }
             };
 
-            timer = setTimeout(() => done(null), CONFIG.timeout);
+            // Sedikit menaikkan timeout untuk kompensasi handshake TLS
+            timer = setTimeout(() => done(null), 6000);
             const startTime = Date.now();
             
             try {
-                // Koneksi Raw TLS ke Proxy (seperti di script Express)
+                // Koneksi Raw TLS ke Proxy
                 socket = tls.connect({
                     host: host, // Connect ke Proxy IP
                     port: portNum, // Connect ke Proxy Port
                     servername: 'speed.cloudflare.com', // SNI target
                     rejectUnauthorized: false, // Abaikan validasi SSL proxy
-                    timeout: CONFIG.timeout 
+                    timeout: 6000 
                 }, () => {
                     // Manual HTTP Request String
-                    // UPDATE: Menambahkan Header Accept agar Cloudflare lebih bersahabat dan return JSON
+                    // Kembali ke header minimalis agar tidak terdeteksi bot aneh-aneh
                     const request = `GET /meta HTTP/1.1\r\n` +
                                     `Host: speed.cloudflare.com\r\n` +
                                     `User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\r\n` +
-                                    `Accept: application/json,text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8\r\n` +
-                                    `Accept-Language: en-US,en;q=0.5\r\n` +
                                     `Connection: close\r\n\r\n`;
                     socket.write(request);
                 });
@@ -384,15 +383,17 @@ if (cluster.isPrimary) {
                 socket.on('end', () => {
                     const latency = Date.now() - startTime;
                     try {
-                        // Pisahkan Header dan Body
-                        const parts = responseBody.split('\r\n\r\n');
-                        const body = parts.length > 1 ? parts[1] : parts[0];
-                        
-                        if (body && body.trim().startsWith('{')) {
-                            const info = JSON.parse(body);
+                        // LOGIKA BARU: ROBUST JSON EXTRACTION
+                        // Mencari '{' pertama dan '}' terakhir untuk mengisolasi JSON
+                        // Ini mengatasi masalah Chunked Encoding (angka hex di awal/akhir body)
+                        const firstCurly = responseBody.indexOf('{');
+                        const lastCurly = responseBody.lastIndexOf('}');
+
+                        if (firstCurly !== -1 && lastCurly !== -1 && lastCurly > firstCurly) {
+                            const jsonString = responseBody.substring(firstCurly, lastCurly + 1);
+                            const info = JSON.parse(jsonString);
                             
                             // Validasi: IP harus ada dan berbeda dengan IP asli server
-                            // Note: myip bisa saja 0.0.0.0 jika getMyIP gagal, tapi setidaknya info.clientIp harus ada
                             if (info && info.clientIp && info.clientIp !== myip) {
                                 done({
                                     proxy: host,
