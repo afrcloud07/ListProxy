@@ -1,214 +1,421 @@
-const tls = require("node:tls")
-const cluster = require("node:cluster")
-const fs = require("node:fs")
-const os = require("node:os")
+const tls = require("node:tls");
+const cluster = require("node:cluster");
+const fs = require("node:fs");
+const os = require("node:os");
+const net = require("node:net");
+const path = require("node:path");
+
+// --- KONFIGURASI ---
+const CONFIG = {
+    concurrency: 50,     // Disesuaikan agar lebih stabil (mirip script anda: 30-50)
+    timeout: 5000,       // Timeout standar 5 detik
+    batchSize: 20,       // Update UI lebih sering
+    outputDir: 'active_proxies', 
+    files: {
+        json: 'proxyip.json',
+        txt: 'proxyip.txt',
+        csv: 'proxyip.csv',
+        input: 'raw.json'
+    }
+};
 
 const color = {
-    gray: (text) => `\x1b[90m${text}\x1b[0m`,
-    blue: (text) => `\x1b[34m${text}\x1b[0m`,
-    cyan: (text) => `\x1b[36m${text}\x1b[0m`,
-    green: (text) => `\x1b[32m${text}\x1b[0m`,
-    red: (text) => `\x1b[31m${text}\x1b[0m`,
-    yellow: (text) => `\x1b[33m${text}\x1b[0m`,
-    magenta: (text) => `\x1b[35m${text}\x1b[0m`,
+    reset: "\x1b[0m",
+    bright: "\x1b[1m",
+    dim: "\x1b[2m",
+    red: "\x1b[31m",
+    green: "\x1b[32m",
+    yellow: "\x1b[33m",
+    blue: "\x1b[34m",
+    magenta: "\x1b[35m",
+    cyan: "\x1b[36m",
+    white: "\x1b[37m",
+    bgBlue: "\x1b[44m",
+    gray: "\x1b[90m"
 };
 
-function log(message, type = "info") {
-    const timestamp = new Date().toISOString().split("T")[1].split(".")[0]
-    const prefix = {
-        info: color.blue("[INFO]"),
-        success: color.green("[SUCCESS]"),
-        error: color.red("[ERROR]"),
-    }
-    console.log(`${color.gray(timestamp)} ${prefix[type] || prefix.info} ${message}`)
+// --- HELPER FUNCTIONS ---
+function formatDuration(ms) {
+    if (!ms || ms < 0) return "00:00";
+    const totalSec = Math.floor(ms / 1000);
+    const m = Math.floor(totalSec / 60);
+    const s = totalSec % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
 }
 
-const formatDuration = (ms) => {
-    let totalSec = Math.floor(ms / 1000);
-    let h = Math.floor(totalSec / 3600);
-    let m = Math.floor((totalSec % 3600) / 60);
-    let s = totalSec % 60;
-    let f = [];
-    if (h > 0) f.push(`${h}h`);
-    if (m > 0) f.push(`${m}m`);
-    if (s > 0 || f.length === 0) f.push(`${s}s`);
-    return f.join(" ");
-};
+function cleanOrg(org) {
+    return (org || 'Unknown')
+        .replace(/[^a-zA-Z0-9\s]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+}
 
+// --- MASTER PROCESS ---
 if (cluster.isPrimary) {
-    const numCPUs = os.cpus().length || 4
-    const startTime = Date.now()
-    let totalProxiesFound = 0
-    let totalChecked = 0
-    let completedWorkers = 0
-    const jsonOutputFile = `proxyip.json`
-    const proxyInputFile = `raw.json`
-    const activeProxies = []
-    const seen = new Set()
-    let lastProgressUpdate = 0
-    let totalProxies = 0
+    const numCPUs = os.cpus().length || 4;
+    const startTime = Date.now();
+    const isTTY = process.stdout.isTTY;
 
-    function updateProgress() {
-        const now = Date.now()
-        if (now - lastProgressUpdate > 1000 || lastProgressUpdate === 0) {
-            const pct = ((totalChecked / totalProxies) * 100).toFixed(1)
-            const rate = totalChecked > 0 ? (totalChecked / ((now - startTime) / 1000)).toFixed(1) : '0'
-            process.stdout.write(`\r${color.gray('[')}${color.cyan('PROGRESS')}${color.gray(']')} ${color.magenta(pct + '%')} (${color.cyan(`${totalChecked}/${totalProxies}`)}) | Found: ${color.green(totalProxiesFound)} | Rate: ${color.magenta(rate + '/s')}   `)
-            lastProgressUpdate = now
+    let stats = {
+        total: 0,
+        checked: 0,
+        found: 0,
+        speed: 0,
+        activeWorkers: numCPUs
+    };
+    
+    const activeProxies = [];
+    const seen = new Set();
+    let animationFrame = 0;
+    const spinner = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
+    let lastLogTime = 0;
+
+    function drawProgress() {
+        const now = Date.now();
+        const elapsed = (now - startTime) / 1000;
+        stats.speed = Math.floor(stats.checked / elapsed) || 0;
+        
+        const pct = stats.total > 0 ? ((stats.checked / stats.total) * 100).toFixed(1) : 0;
+        const remaining = stats.total - stats.checked;
+        const etaSec = stats.speed > 0 ? remaining / stats.speed : 0;
+        
+        if (isTTY) {
+            const width = 20; 
+            const filled = Math.round((width * pct) / 100);
+            const barStr = color.green + '█'.repeat(filled) + color.gray + '░'.repeat(width - filled) + color.reset;
+            const spin = color.cyan + spinner[animationFrame] + color.reset;
+            
+            const statusPct = `${color.bright}${pct}%${color.reset}`;
+            const statusFound = `${color.gray}Found:${color.reset} ${color.green}${color.bright}${stats.found}${color.reset}`;
+            const statusCheck = `${color.gray}Check:${color.reset} ${stats.checked}/${stats.total}`;
+            const statusSpeed = `${color.gray}Speed:${color.reset} ${color.yellow}${stats.speed}/s${color.reset}`;
+            const statusEta = `${color.gray}ETA:${color.reset} ${color.magenta}${formatDuration(etaSec * 1000)}${color.reset}`;
+
+            const output = `\r${spin}  ${barStr}  ${statusPct}  |  ${statusFound}  |  ${statusSpeed}  |  ${statusEta}  |  ${statusCheck}`;
+            process.stdout.write(output);
+            animationFrame = (animationFrame + 1) % spinner.length;
+        } else {
+            if (now - lastLogTime > 5000) {
+                console.log(`[PROGRESS] ${pct}% | Checked: ${stats.checked}/${stats.total} | Found: ${stats.found} | Speed: ${stats.speed}/s | ETA: ${formatDuration(etaSec * 1000)}`);
+                lastLogTime = now;
+            }
         }
     }
 
-    async function getMyIP() {
-        const response = await fetch("https://speed.cloudflare.com/meta", { headers: { Referer: "https://speed.cloudflare.com"}} )
-        if (!response.ok) throw new Error(`Failed to fetch IP: ${response.status}`)
-        const data = await response.json()
-        return data.clientIp
+    function printFound(p) {
+        const latencyColor = p.latency < 200 ? color.green : (p.latency < 1000 ? color.yellow : color.red);
+        const orgInfo = p.asOrganization ? cleanOrg(p.asOrganization).substring(0, 20) : "Unknown Org";
+        const logMsg = `${color.cyan}[+]${color.reset} ${p.proxy}:${p.port.padEnd(5)}  ${color.magenta}${p.country}${color.reset}  ${latencyColor}${p.latency}ms${color.reset}  ${color.dim}${orgInfo}${color.reset}`;
+
+        if (isTTY) {
+            process.stdout.clearLine(0);
+            process.stdout.cursorTo(0);
+            console.log(logMsg);
+            drawProgress();
+        } else {
+            console.log(logMsg);
+        }
     }
 
     function loadProxies() {
-        if (!fs.existsSync(proxyInputFile)) {
-            log(`File ${proxyInputFile} not found!`, "error")
-            process.exit(1)
+        if (!fs.existsSync(CONFIG.files.input)) {
+            console.error(`${color.red}[ERROR] File ${CONFIG.files.input} not found!${color.reset}`);
+            process.exit(1);
         }
-        const proxies = JSON.parse(fs.readFileSync(proxyInputFile, 'utf8'))
-        return [...new Set((proxies).map(p => `${p.proxy}:${p.port}`))];
+        try {
+            const content = fs.readFileSync(CONFIG.files.input, 'utf8');
+            const data = JSON.parse(content);
+            return [...new Set(data.map(p => `${p.proxy}:${p.port}`))];
+        } catch (e) {
+            console.error(`${color.red}[ERROR] Invalid JSON format in ${CONFIG.files.input}${color.reset}`);
+            process.exit(1);
+        }
+    }
+
+    // UPDATE: Menggunakan metode fetch + Referer persis seperti script yang bekerja
+    async function getMyIP() {
+        try {
+            const response = await fetch("https://speed.cloudflare.com/meta", { 
+                headers: { "Referer": "https://speed.cloudflare.com/" }
+            });
+            if (!response.ok) throw new Error("Failed");
+            const data = await response.json();
+            return data.clientIp;
+        } catch (e) {
+            // Fallback ke ipify jika gagal
+            try {
+                const r = await fetch("https://api.ipify.org?format=json");
+                const d = await r.json();
+                return d.ip;
+            } catch {
+                return "0.0.0.0";
+            }
+        }
     }
 
     (async () => {
-        try {
-            const myip = await getMyIP()
-            log(`Your IP: ${color.cyan(myip)}`, "info")
+        if (isTTY) process.stdout.write('\x1b[2J\x1b[0f');
+        
+        console.log(`${color.bgBlue}${color.white}${color.bright}  ⚡ PROXY CHECKER PRO (Final Fix)  ${color.reset}\n`);
 
-            const allProxies = loadProxies()
-            totalProxies = allProxies.length
-            log(`Loaded ${color.cyan(totalProxies)} proxies from ${proxyInputFile}`, "info")
+        const myip = await getMyIP();
+        const allProxies = loadProxies();
+        stats.total = allProxies.length;
+        
+        console.log(`${color.dim}IP: ${myip} | Loaded: ${stats.total} proxies | Threads: ${numCPUs * CONFIG.concurrency}${color.reset}\n`);
+        console.log(`Environment: ${isTTY ? 'Terminal (Interactive)' : 'CI/Background (Log Mode)'}\n`);
 
-            if (totalProxies === 0) {
-                log("No proxies found!", "error")
-                process.exit(1)
-            }
+        const chunkSize = Math.ceil(stats.total / numCPUs);
+        const updateRate = isTTY ? 100 : 1000;
+        const uiInterval = setInterval(() => drawProgress(), updateRate);
 
-            const chunks = []
-            const chunkSize = Math.ceil(totalProxies / numCPUs)
-            for (let i = 0; i < numCPUs; i++) {
-                chunks.push(allProxies.slice(i * chunkSize, (i + 1) * chunkSize))
-            }
+        for (let i = 0; i < numCPUs; i++) {
+            const worker = cluster.fork();
+            const chunk = allProxies.slice(i * chunkSize, (i + 1) * chunkSize);
+            
+            worker.send({ type: 'START', myip, proxies: chunk });
 
-            log(`Starting ${numCPUs} workers...`, "info")
-     //       setInterval(() => fs.writeFileSync(jsonOutputFile, JSON.stringify(activeProxies, null, 2)), 60000)
-
-            for (let i = 0; i < numCPUs; i++) {
-                const worker = cluster.fork()
-
-                worker.send({ myip, proxies: chunks[i] })
-
-                worker.on("message", (msg) => {
-                    if (msg.type === "proxyFound") {
-                        const key = `${msg.data.proxy}:${msg.data.port}`
-                        if (!seen.has(key)) {
-                            seen.add(key)
-                            totalProxiesFound++
-                            activeProxies.push(msg.data)
-                        }
-                    //    process.stdout.clearLine(0)
-                     //   process.stdout.cursorTo(0)
-                      //  log(`Found: ${color.cyan(msg.data.proxy)}:${color.cyan(msg.data.port)} | ${color.yellow(msg.data.country || 'UNK')} | ${color.blue((msg.data.asOrganization || 'Unknown').substring(0, 30))} | ${color.cyan(msg.data.latency + 'ms')}`, "success")
-                     //   updateProgress()
-                    } else if (msg.type === "checked") {
-                        totalChecked++
-                      //  updateProgress()
+            worker.on('message', (msg) => {
+                if (msg.type === 'BATCH_UPDATE') {
+                    stats.checked += msg.checkedCount;
+                    if (msg.foundProxies && msg.foundProxies.length > 0) {
+                        stats.found += msg.foundProxies.length;
+                        msg.foundProxies.forEach(p => {
+                            const key = `${p.proxy}:${p.port}`;
+                            if (!seen.has(key)) {
+                                seen.add(key);
+                                activeProxies.push(p);
+                                printFound(p);
+                            }
+                        });
                     }
-                })
+                }
+            });
 
-                worker.on('exit', () => {
-                    completedWorkers++
-                    if (completedWorkers === numCPUs) {
-                        console.log()
-                        fs.writeFileSync(jsonOutputFile, JSON.stringify(activeProxies, null, 2))
-                        const duration = Date.now() - startTime
-                        log(`Completed in ${formatDuration(duration)}`, "success")
-                        log(`Checked: ${totalChecked}, Found: ${totalProxiesFound} working proxies`, "success")
-                        log(`Results saved to ${jsonOutputFile}`, "success")
-                        process.exit(0)
-                    }
-                })
-            }
-
-        } catch (error) {
-            log(`${error.message}`, "error")
-            process.exit(1)
+            worker.on('exit', () => {
+                stats.activeWorkers--;
+                if (stats.activeWorkers === 0) {
+                    clearInterval(uiInterval);
+                    finish();
+                }
+            });
         }
-    })()
+    })();
 
+    function finish() {
+        if (isTTY) {
+            process.stdout.clearLine(0);
+            process.stdout.cursorTo(0);
+        }
+        
+        console.log(`\n${color.green}Scan Selesai!${color.reset}`);
+        
+        const formatProxyData = (p) => {
+            const safeOrg = cleanOrg(p.asOrganization);
+            return `${p.proxy},${p.port},${p.country || 'UNK'},${safeOrg}`; 
+        };
+
+        try {
+            // Save JSON
+            fs.writeFileSync(CONFIG.files.json, JSON.stringify(activeProxies, null, 2));
+            
+            // Save TXT & CSV
+            const txtContent = activeProxies.map(formatProxyData).join('\n');
+            fs.writeFileSync(CONFIG.files.txt, txtContent);
+            fs.writeFileSync(CONFIG.files.csv, txtContent);
+
+            // Save per Country (Feature retained)
+            if (!fs.existsSync(CONFIG.outputDir)) {
+                fs.mkdirSync(CONFIG.outputDir, { recursive: true });
+            }
+
+            const proxiesByCountry = activeProxies.reduce((acc, p) => {
+                const countryCode = (p.country || 'UNK').toUpperCase(); 
+                if (!acc[countryCode]) acc[countryCode] = [];
+                acc[countryCode].push(p);
+                return acc;
+            }, {});
+
+            let filesCreated = 0;
+            for (const countryCode in proxiesByCountry) {
+                const filePath = path.join(CONFIG.outputDir, `${countryCode}.txt`);
+                const fileContent = proxiesByCountry[countryCode].map(formatProxyData).join('\n');
+                fs.writeFileSync(filePath, fileContent);
+                filesCreated++;
+            }
+
+            console.log(`${color.yellow}Disimpan:${color.reset} ${stats.found} proxies`);
+            if (activeProxies.length > 0) {
+                 console.log(`${color.yellow}Fitur Baru:${color.reset} ${filesCreated} file negara dibuat di folder ${CONFIG.outputDir}`);
+            }
+
+        } catch (e) {
+            console.error(`\n${color.red}[ERROR FILE SYSTEM] Gagal menyimpan file output!${color.reset}`);
+            console.error(`${color.red}Pesan Error:${color.reset} ${e.message}`);
+        }
+        process.exit(0);
+    }
+
+// --- WORKER PROCESS ---
 } else {
-    let myip
-    let proxies = []
-    const CONCURRENCY = 30
-    let idx = 0
-    let running = 0
-    let resolve
-
-    process.on("message", async (msg) => {
-        if (msg.myip && msg.proxies) {
-            myip = msg.myip
-            proxies = msg.proxies
-            await new Promise(r => { resolve = r; runNext() })
-            process.exit(0)
+    process.on('message', async (msg) => {
+        if (msg.type === 'START') {
+            const { myip, proxies } = msg;
+            await runWorker(myip, proxies);
+            process.exit(0);
         }
-    })
+    });
 
-    function runNext() {
-        while (running < CONCURRENCY && idx < proxies.length) {
-            running++
-            const p = proxies[idx++]
-            checkProxy(p).finally(() => {
-                running--
-                if (idx < proxies.length) runNext()
-                else if (running === 0) resolve()
-            })
-        }
-    }
+    async function runWorker(myip, proxies) {
+        let currentIndex = 0;
+        let activePromises = 0;
+        let pendingChecked = 0;
+        let pendingFound = [];
 
-    async function sendRequest(host, port, targetHost, path) {
-        return new Promise((resolve, reject) => {
-            if (!host || !port) return reject(new Error("Missing host or port"))
-            const start = Date.now()
-            const timeout = setTimeout(() => { socket.destroy(); reject(new Error("Timeout")) }, 5000)
-
-            const socket = tls.connect({ host, port: parseInt(port), servername: targetHost }, () => {
-                socket.write(`GET ${path} HTTP/1.1\r\nHost: ${targetHost}\r\nUser-Agent: Mozilla/5.0\r\nReferer: https://speed.cloudflare.com/\r\nConnection: close\r\n\r\n`)
-            })
-
-            let data = ""
-            socket.on("data", c => data += c.toString())
-            socket.on("end", () => {
-                clearTimeout(timeout)
-                const latency = Date.now() - start
-                const parts = data.split("\r\n\r\n")
-                const body = parts.length > 1 ? parts.slice(1).join("\r\n\r\n") : ""
-                socket.destroy()
-                resolve({ body, latency })
-            })
-            socket.on("error", e => { clearTimeout(timeout); socket.destroy(); reject(e) })
-        })
-    }
-
-    async function checkProxy(proxy) {
-        const [host, port] = proxy.split(':')
-        try {
-            const res = await sendRequest(host, port, "speed.cloudflare.com", "/meta")
-            if (!res || !res.body) { process.send({ type: "checked" }); return }
-
-            let info
-            try { info = JSON.parse(res.body) } catch { process.send({ type: "checked" }); return }
-
-            if (info.clientIp && info.clientIp !== myip && ["BAH", "CGP", "DAC", "JSR", "PBH", "BWN", "PNH", "HKG", "KHH", "MFM", "TPE", "TBS", "AMD", "BLR", "IXC", "MAA", "HYD", "CNN", "KNU", "COK", "CCU", "BOM", "NAG", "DEL", "PAT", "DPS", "CGK", "JOG", "BGW", "BSR", "EBL", "NJF", "XNH", "ISU", "TLV", "HFA", "FUK", "OKA", "KIX", "NRT", "AMM", "AKX", "ALA", "NQZ", "KWI", "FRU", "VTE", "JHB", "KUL", "KCH", "MLE", "ULN", "RGN", "KTM", "MCT", "ISB", "KHI", "LHE", "ZDM", "CGY", "CEB", "MNL", "CRK", "DOH", "DMM", "JED", "RUH", "SIN", "ICN", "CMB", "BKK", "CNX", "URT", "DXB", "TAS", "DAD", "HAN", "SGN"].includes(info.colo)) {
-                const { clientIp: ip, httpProtocol, hostname, ...rest } = info
-                process.send({ type: "proxyFound", data: { proxy: host, port, proxyip: true, ip, latency: res.latency, ...rest } })
+        // Report interval
+        const reportInterval = setInterval(() => {
+            if (pendingChecked > 0) {
+                if (process.connected) {
+                    process.send({
+                        type: 'BATCH_UPDATE',
+                        checkedCount: pendingChecked,
+                        foundProxies: pendingFound
+                    });
+                }
+                pendingChecked = 0;
+                pendingFound = [];
             }
-            process.send({ type: "checked" })
-        } catch {
-            process.send({ type: "checked" })
-        }
+        }, 500);
+
+        return new Promise((resolve) => {
+            function next() {
+                if (currentIndex >= proxies.length && activePromises === 0) {
+                    clearInterval(reportInterval);
+                    // Final report
+                    if (pendingChecked > 0 && process.connected) {
+                        process.send({
+                            type: 'BATCH_UPDATE',
+                            checkedCount: pendingChecked,
+                            foundProxies: pendingFound
+                        });
+                    }
+                    resolve();
+                    return;
+                }
+
+                while (activePromises < CONFIG.concurrency && currentIndex < proxies.length) {
+                    const proxyStr = proxies[currentIndex++];
+                    activePromises++;
+                    
+                    checkProxy(proxyStr, myip)
+                        .then((result) => {
+                            pendingChecked++;
+                            if (result) pendingFound.push(result);
+                        })
+                        .finally(() => {
+                            activePromises--;
+                            next();
+                        });
+                }
+            }
+            next();
+        });
+    }
+
+    // UPDATE: Implementasi checkProxy menggunakan logika PERSIS dari script yang bekerja
+    function checkProxy(proxyStr, myip) {
+        return new Promise((resolve) => {
+            const [host, port] = proxyStr.split(':');
+            const portNum = parseInt(port);
+
+            if (!host || !portNum) return resolve(null);
+
+            let socket;
+            let timer;
+            
+            const done = (res) => {
+                if (timer) clearTimeout(timer);
+                if (socket && !socket.destroyed) socket.destroy();
+                resolve(res);
+            };
+
+            timer = setTimeout(() => done(null), CONFIG.timeout);
+            const startTime = Date.now();
+            
+            try {
+                // Koneksi Raw TLS
+                socket = tls.connect({
+                    host: host, 
+                    port: portNum, 
+                    servername: 'speed.cloudflare.com', 
+                    rejectUnauthorized: false, 
+                    timeout: CONFIG.timeout 
+                }, () => {
+                    // CRITICAL UPDATE: Menambahkan Header "Referer" seperti script yang bekerja
+                    // Ini kunci agar tidak diblokir Cloudflare dan mendapat respons JSON valid
+                    const request = `GET /meta HTTP/1.1\r\n` +
+                                    `Host: speed.cloudflare.com\r\n` +
+                                    `User-Agent: Mozilla/5.0\r\n` +
+                                    `Referer: https://speed.cloudflare.com/\r\n` +
+                                    `Connection: close\r\n\r\n`;
+                    socket.write(request);
+                });
+
+                let data = '';
+                socket.on('data', (chunk) => {
+                    data += chunk.toString();
+                });
+
+                socket.on('end', () => {
+                    const latency = Date.now() - startTime;
+                    try {
+                        // LOGIKA PARSING PERSIS SCRIPT USER:
+                        // Split berdasarkan double CRLF untuk memisahkan header dan body
+                        const parts = data.split('\r\n\r\n');
+                        const body = parts.length > 1 ? parts.slice(1).join('\r\n\r\n') : parts[0];
+                        
+                        if (body) {
+                            let info;
+                            try {
+                                // Coba parse langsung (berhasil di script user)
+                                info = JSON.parse(body);
+                            } catch (e) {
+                                // Fallback: kadang ada sisa chunked encoding, ambil antara { dan }
+                                const first = body.indexOf('{');
+                                const last = body.lastIndexOf('}');
+                                if (first !== -1 && last !== -1) {
+                                    info = JSON.parse(body.substring(first, last + 1));
+                                }
+                            }
+                            
+                            if (info && info.clientIp && info.clientIp !== myip) {
+                                // NOTE: Di script user ada filter COLO (Asia/ME). 
+                                // Di sini saya tidak memfilter agar menangkap SEMUA proxy yang hidup.
+                                done({
+                                    proxy: host,
+                                    port: port,
+                                    ip: info.clientIp,
+                                    latency,
+                                    country: info.country,
+                                    asOrganization: info.asOrganization,
+                                    city: info.city,
+                                    colo: info.colo
+                                });
+                                return;
+                            }
+                        }
+                    } catch (e) {
+                        // Parsing gagal
+                    }
+                    done(null);
+                });
+
+                socket.on('error', () => done(null));
+                socket.on('timeout', () => done(null));
+
+            } catch (err) {
+                done(null);
+            }
+        });
     }
 }
