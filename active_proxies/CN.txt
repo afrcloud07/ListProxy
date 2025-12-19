@@ -1,10 +1,12 @@
-14.21.7.146,10495,CN,CHINANET Guangdong province network
-14.21.7.146,12388,CN,CHINANET Guangdong province network
+14.21.7.146,18085,CN,CHINANET Guangdong province network
+14.21.7.146,18888,CN,CHINANET Guangdong province network
 36.133.126.13,443,CN,China Mobile Communications Corporation
 39.98.224.123,443,CN,Aliyun Computing Co LTD
 120.204.51.3,443,CN,China Mobile Communications Corporation shanghai company
+14.21.7.146,11965,CN,CHINANET Guangdong province network
 216.24.184.171,95,CN,CHINANET anhui province network
 47.92.161.8,443,CN,Aliyun Computing Co LTD
 47.92.245.88,443,CN,Aliyun Computing Co LTD
 117.50.80.157,1234,CN,Shanghai UCloud Information Technology Company Limited
 220.196.190.122,443,CN,China Unicom
+120.53.10.175,8888,CN,Beijing Voda Telecom Technology Co Ltd
