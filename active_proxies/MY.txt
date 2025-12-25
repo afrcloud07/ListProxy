@@ -9,5 +9,5 @@
 38.60.193.247,13300,MY,Kaopu Cloud HK Limited
 45.159.51.121,32199,MY,Kaopu Cloud HK Limited
 58.27.117.24,443,MY,TMNET
-155.254.60.225,443,MY,Evoxt Enterprise
 45.89.107.118,443,MY,WorkTitans BV
+155.254.60.225,443,MY,Evoxt Enterprise
