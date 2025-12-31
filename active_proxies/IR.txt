@@ -1,5 +1,4 @@
 185.173.107.37,443,IR,NOAVARAN SHABAKEH SABZ MEHREGAN Ltd
-185.206.93.129,4343,IR,AbrArvan IaaS
 193.105.6.84,443,IR,Novinhost01idc
 2.189.130.101,2087,IR,Toloe Rayaneh Loghman
 193.228.90.99,443,IR,Internet Utilities Europe and Asia Limited
