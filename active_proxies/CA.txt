@@ -8,7 +8,6 @@
 69.28.82.253,443,CA,AtlanticNet Toronto LLC
 69.28.83.244,443,CA,AtlanticNet Toronto LLC
 209.38.12.25,443,CA,DigitalOcean LLC
-137.184.168.37,443,CA,DigitalOcean LLC
 178.128.228.52,443,CA,DigitalOcean LLC
 155.138.128.135,443,CA,Vultr Holdings LLC
 38.180.13.8,2053,CA,3NT SOLUTIONS LLP
@@ -18,26 +17,26 @@
 35.183.216.163,2053,CA,Amazon Data Services Canada
 35.182.7.190,443,CA,Securly Inc
 35.183.216.163,8443,CA,Amazon Data Services Canada
-35.182.226.236,443,CA,Amazon Data Services Canada
-40.177.65.8,443,CA,Amazon Data Services Canada
 89.251.9.4,15466,CA,Deployish Limited
+35.182.226.236,443,CA,Amazon Data Services Canada
+204.110.221.155,443,CA,Securly Inc
+40.177.65.8,443,CA,Amazon Data Services Canada
 192.99.252.243,2053,CA,OVH SAS
-91.194.11.78,81,CA,DGTL TECH UK LLP
 85.208.108.71,443,CA,WorkTitans BV
-149.56.14.62,443,CA,OVH Hosting Inc
 148.113.200.194,8443,CA,OVH Hosting Inc
 148.113.200.194,2053,CA,OVH Hosting Inc
 148.113.204.36,2053,CA,OVH Hosting Inc
 148.113.204.36,8443,CA,OVH Hosting Inc
-35.183.163.195,80,CA,Securly Inc
 35.182.7.190,80,CA,Securly Inc
+35.183.163.195,80,CA,Securly Inc
 140.238.158.238,8080,CA,Oracle Public Cloud
 3.97.173.206,80,CA,Securly Inc
+149.56.14.62,443,CA,OVH Hosting Inc
 104.129.181.152,443,CA,Cluster Logic Inc
 207.61.86.114,443,CA,Empire Life
 209.200.246.130,443,CA,REGXA LLC
 150.230.27.23,16504,CA,Oracle Corporation
 89.251.9.5,8443,CA,Deployish Limited
-213.255.209.207,443,CA,Cloud Web Manage
 213.255.209.189,443,CA,Cloud Web Manage
+213.255.209.207,443,CA,Cloud Web Manage
 51.79.120.221,2053,CA,OVH SAS
