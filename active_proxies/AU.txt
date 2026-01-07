@@ -9,5 +9,6 @@
 192.9.183.128,45673,AU,Oracle Corporation
 192.9.190.80,23862,AU,Oracle Corporation
 152.67.101.72,23010,AU,Oracle Public Cloud
+112.213.34.242,443,AU,Mammoth Media Pty Ltd
 152.69.174.99,25248,AU,Oracle Corporation
 125.7.24.251,443,AU,Macquarie Telecom
