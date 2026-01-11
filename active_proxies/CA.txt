@@ -17,24 +17,24 @@
 192.18.150.121,27620,CA,Oracle Corporation
 35.183.163.195,443,CA,Securly Inc
 35.183.216.163,2053,CA,Amazon Data Services Canada
+89.251.9.4,15466,CA,Deployish Limited
 35.182.7.190,443,CA,Securly Inc
 35.183.216.163,8443,CA,Amazon Data Services Canada
-204.110.221.105,443,CA,Securly Inc
 35.182.226.236,443,CA,Amazon Data Services Canada
 40.177.65.8,443,CA,Amazon Data Services Canada
-89.251.9.4,15466,CA,Deployish Limited
 192.99.252.243,2053,CA,OVH SAS
+204.110.221.253,443,CA,Securly Inc
 91.194.11.78,81,CA,DGTL TECH UK LLP
 85.208.108.71,443,CA,WorkTitans BV
-149.56.14.62,443,CA,OVH Hosting Inc
-148.113.200.194,2053,CA,OVH Hosting Inc
 148.113.200.194,8443,CA,OVH Hosting Inc
+148.113.200.194,2053,CA,OVH Hosting Inc
 148.113.204.36,2053,CA,OVH Hosting Inc
 148.113.204.36,8443,CA,OVH Hosting Inc
 35.182.7.190,80,CA,Securly Inc
-35.183.163.195,80,CA,Securly Inc
 140.238.158.238,8080,CA,Oracle Public Cloud
+35.183.163.195,80,CA,Securly Inc
 3.97.173.206,80,CA,Securly Inc
+149.56.14.62,443,CA,OVH Hosting Inc
 104.129.181.152,443,CA,Cluster Logic Inc
 207.61.86.114,443,CA,Empire Life
 209.200.246.130,443,CA,REGXA LLC
