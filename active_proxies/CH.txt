@@ -1,7 +1,6 @@
 140.238.208.210,443,CH,Oracle Public Cloud
 152.67.84.47,443,CH,Oracle Public Cloud
 176.10.125.114,443,CH,Datasource AG
-31.7.63.135,443,CH,Private Layer INC
 140.238.208.12,443,CH,Oracle Public Cloud
 179.43.176.216,443,CH,PRIVATE LAYER INC
 179.43.180.231,443,CH,PRIVATE LAYER INC
@@ -28,8 +27,8 @@
 91.245.225.79,8443,CH,GLB Bulut Teknolojisi Limited Sirketi
 91.245.225.69,443,CH,GLB Bulut Teknolojisi Limited Sirketi
 91.90.193.138,443,CH,Friendhosting LTD
-91.90.193.24,443,CH,Friendhosting LTD
 91.90.193.159,443,CH,Friendhosting LTD
+91.90.193.24,443,CH,Friendhosting LTD
 94.131.12.15,443,CH,WorkTitans BV
 94.131.12.56,443,CH,WorkTitans BV
 194.135.22.181,443,CH,GLB Bulut Teknolojisi Limited Sirketi
@@ -39,11 +38,11 @@
 194.87.18.167,443,CH,Baxet Group Inc
 194.87.97.6,2053,CH,GLB Bulut Teknolojisi Limited Sirketi
 171.22.16.235,443,CH,GLOBAL CONNECTIVITY SOLUTIONS LLP
-195.141.65.98,443,CH,Sunrise Communications AG
 195.141.59.27,443,CH,Trueb AG
+195.141.65.98,443,CH,Sunrise Communications AG
 195.15.254.118,443,CH,Infomaniak Network SA
-95.183.51.10,8443,CH,Solar Communications GmbH
 95.183.51.10,2053,CH,Solar Communications GmbH
+95.183.51.10,8443,CH,Solar Communications GmbH
 45.143.200.126,443,CH,GLOBAL CONNECTIVITY SOLUTIONS LLP
 45.143.200.141,443,CH,GLOBAL CONNECTIVITY SOLUTIONS LLP
 45.143.200.127,443,CH,GLOBAL CONNECTIVITY SOLUTIONS LLP
@@ -54,7 +53,6 @@
 45.82.254.241,443,CH,WorkTitans BV
 45.85.93.21,443,CH,Internet Utilities Europe and Asia Limited
 45.85.93.49,443,CH,Internet Utilities Europe and Asia Limited
-45.85.93.62,443,CH,Internet Utilities Europe and Asia Limited
 45.85.93.83,443,CH,Internet Utilities Europe and Asia Limited
 45.85.93.96,443,CH,Internet Utilities Europe and Asia Limited
 45.90.58.58,81,CH,Green Floid LLC

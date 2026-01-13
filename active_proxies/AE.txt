@@ -1,4 +1,4 @@
-84.235.245.65,2096,AE,Cloudflare Inc
+84.235.245.65,2096,AE,Oracle Svenska AB
 193.123.81.105,443,AE,Oracle Corporation
 176.97.67.38,443,AE,3nt solutions LLP
 176.97.66.175,443,AE,3nt solutions LLP
@@ -11,7 +11,6 @@
 3.29.76.68,443,AE,Amazon Data Services UAE
 3.29.240.49,443,AE,Amazon Data Services UAE
 193.123.90.82,12648,AE,Oracle Corporation
-217.195.200.138,443,AE,GCore Labs Customer assignment
 152.32.181.246,44070,AE,UCLOUD INFORMATION TECHNOLOGY HK LIMITED
 90.156.221.54,443,AE,ITGLOBAL COM DMCC
 217.195.200.52,443,AE,GCore Labs Customer assignment
