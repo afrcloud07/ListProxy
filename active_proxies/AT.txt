@@ -6,19 +6,19 @@
 38.180.143.51,2053,AT,3NT SOLUTIONS LLP
 38.180.143.51,8443,AT,3NT SOLUTIONS LLP
 193.219.97.146,2053,AT,Alwyzon a trading name of Hohl IT eU
-193.219.97.235,2053,AT,Alwyzon a trading name of Hohl IT eU
 193.219.97.146,8443,AT,Alwyzon a trading name of Hohl IT eU
-193.219.97.235,8443,AT,Alwyzon a trading name of Hohl IT eU
+193.219.97.235,2053,AT,Alwyzon a trading name of Hohl IT eU
 193.219.97.186,2053,AT,Alwyzon a trading name of Hohl IT eU
+193.219.97.235,8443,AT,Alwyzon a trading name of Hohl IT eU
 193.233.233.105,443,AT,Aeza International LTD
 94.177.8.122,2053,AT,Alwyzon a trading name of Hohl IT eU
 94.177.8.122,8443,AT,Alwyzon a trading name of Hohl IT eU
 94.177.8.78,2053,AT,Alwyzon a trading name of Hohl IT eU
-46.102.156.144,8443,AT,Alwyzon a trading name of Hohl IT eU
-46.102.156.27,2053,AT,Alwyzon a trading name of Hohl IT eU
-46.102.156.144,2053,AT,Alwyzon a trading name of Hohl IT eU
 62.60.239.111,443,AT,Aeza International LTD
 185.104.63.203,443,AT,ZetServers Vienna
+46.102.156.27,2053,AT,Alwyzon a trading name of Hohl IT eU
+46.102.156.144,8443,AT,Alwyzon a trading name of Hohl IT eU
+46.102.156.144,2053,AT,Alwyzon a trading name of Hohl IT eU
 85.192.27.165,443,AT,Aeza International LTD
 203.98.67.74,2053,AT,Alwyzon a trading name of Hohl IT eU
 203.98.67.74,8443,AT,Alwyzon a trading name of Hohl IT eU

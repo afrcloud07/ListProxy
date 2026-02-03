@@ -7,9 +7,10 @@
 64.110.70.205,23022,KR,Oracle Corporation
 131.186.27.112,2096,KR,Oracle Public Cloud
 144.24.90.107,443,KR,Oracle Corporation
-175.202.135.114,12427,KR,Korea Telecom
 193.122.107.234,443,KR,Oracle Public Cloud
 130.162.130.105,443,KR,Oracle Public Cloud
+175.202.135.114,12427,KR,Korea Telecom
+64.110.79.188,443,KR,Oracle Corporation
 144.24.73.232,443,KR,Oracle Corp UK Ltd
 158.180.72.60,443,KR,oracle
 131.186.18.212,28887,KR,Oracle Corporation
@@ -19,6 +20,7 @@
 132.145.88.82,38066,KR,Oracle Public Cloud
 132.226.21.116,6056,KR,Oracle Public Cloud
 132.226.23.92,22053,KR,Oracle Public Cloud
+138.2.122.191,443,KR,Oracle Corporation
 138.2.122.197,39863,KR,Oracle Corporation
 140.238.2.81,587,KR,Oracle Public Cloud
 140.238.5.75,13644,KR,Oracle Public Cloud
@@ -34,9 +36,9 @@
 146.56.140.79,22561,KR,Cloudflare London LLC
 146.56.140.79,44699,KR,Cloudflare London LLC
 146.56.182.217,54266,KR,Oracle Corporation Global software solutions California USA
-146.56.42.21,7777,KR,Cloudflare London LLC
 146.56.99.22,20443,KR,Oracle Corporation Global software solutions California USA
 146.56.99.255,56789,KR,Oracle Corporation Global software solutions California USA
+146.56.42.21,7777,KR,Cloudflare London LLC
 1.232.86.168,50001,KR,SK Broadband Co Ltd
 1.249.45.86,12112,KR,SK Broadband Co Ltd
 103.86.44.120,65432,KR,MOACK DC
@@ -45,6 +47,7 @@
 211.197.161.123,10041,KR,Korea Telecom
 112.160.4.111,39422,KR,KT
 211.219.241.28,31337,KR,KT
+112.166.95.230,50001,KR,Korea Telecom
 112.185.223.152,50001,KR,Korea Telecom
 211.48.77.114,12312,KR,Korea Telecom
 152.67.209.237,22053,KR,Oracle Public Cloud
@@ -57,9 +60,9 @@
 221.162.120.94,50001,KR,KT
 106.248.211.16,30075,KR,LG DACOM Corporation
 115.94.122.118,50001,KR,LG Uplus
-64.110.75.145,443,KR,Oracle Corporation
 106.245.63.110,50001,KR,LG DACOM Corporation
 123.143.9.5,14041,KR,LG Uplus
+64.110.75.145,443,KR,Oracle Corporation
 152.69.229.175,22558,KR,Oracle Corporation
 217.142.138.61,37914,KR,Oracle Svenska AB
 152.70.236.195,30001,KR,Oracle Corporation
