@@ -4,5 +4,6 @@
 216.24.184.171,95,CN,CHINANET Anhui province network
 47.92.161.8,443,CN,Aliyun Computing Co LTD
 47.92.245.88,443,CN,Aliyun Computing Co LTD
+117.50.80.157,1234,CN,Shanghai UCloud Information Technology Company Limited
 220.196.190.122,443,CN,China Unicom
 120.53.10.175,8888,CN,Beijing Voda Telecom Technology Co Ltd
