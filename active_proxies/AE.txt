@@ -1,7 +1,8 @@
 84.235.245.65,2096,AE,Cloudflare Inc
 193.123.81.105,443,AE,Oracle Corporation
-176.97.67.38,443,AE,3nt solutions LLP
+139.185.34.131,443,AE,Oracle Corporation
 176.97.66.175,443,AE,3nt solutions LLP
+176.97.67.38,443,AE,3nt solutions LLP
 139.185.50.5,14594,AE,Oracle Corporation
 84.235.245.18,34501,AE,Oracle Svenska AB
 20.174.15.226,443,AE,Microsoft Corporation

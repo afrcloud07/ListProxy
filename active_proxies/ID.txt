@@ -3,4 +3,3 @@
 103.6.207.108,8080,ID,PT Pusat Media Indonesia
 43.218.77.16,1443,ID,Amazoncom Inc
 156.244.1.250,8443,ID,Lightnode Limited
-31.97.50.106,443,ID,Hostinger International Limited
