@@ -8,3 +8,4 @@
 117.50.80.157,1234,CN,Shanghai UCloud Information Technology Company Limited
 220.196.190.122,443,CN,China Unicom
 120.53.10.175,8888,CN,Beijing Voda Telecom Technology Co Ltd
+156.230.12.71,443,CN,263 Shanghai Communications Ltd
