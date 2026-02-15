@@ -11,4 +11,3 @@
 46.183.186.57,443,HU,EDIS Infrastructure in Hungary
 180.149.37.38,8443,HU,GCore Labs SA
 5.182.38.111,443,HU,WorkTitans BV
-5.182.38.168,81,HU,WorkTitans BV
