@@ -1,6 +1,7 @@
 172.232.112.240,587,IN,Linode
 64.227.174.213,2053,IN,DigitalOcean LLC
 64.227.174.213,8443,IN,DigitalOcean LLC
+134.195.137.107,22473,IN,ReadyDedis LLC
 140.238.225.218,80,IN,Cloudflare London LLC
 65.20.74.136,2053,IN,Vultr Holdings LLC
 4.240.110.47,443,IN,Microsoft Corporation
@@ -15,8 +16,9 @@
 146.56.48.138,23010,IN,Oracle Corporation Global software solutions California USA
 148.113.43.228,2053,IN,OVHTECH RD INDIA PRIVATE LIMITED
 148.113.43.228,8443,IN,OVHTECH RD INDIA PRIVATE LIMITED
-64.227.158.180,443,IN,DigitalOcean LLC
 216.10.243.159,443,IN,PDR Solutions FZC
+64.227.158.180,443,IN,DigitalOcean LLC
 115.242.180.202,19000,IN,Reliance Jio Infocomm Limited
 152.70.76.104,46000,IN,Oracle Corporation
 152.70.75.80,15805,IN,Oracle Corporation
+219.65.73.81,443,IN,Reliance Jio Infocomm Limited
