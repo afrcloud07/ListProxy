@@ -1,4 +1,5 @@
 185.206.93.129,4343,IR,AbrArvan IaaS
+193.105.6.84,443,IR,Novinhost01idc
 91.92.206.174,27784,IR,Telecommunication Company of Tehran
 193.228.90.99,443,IR,Internet Utilities Europe and Asia Limited
 185.126.1.175,2083,IR,Pishgaman Data Center Service

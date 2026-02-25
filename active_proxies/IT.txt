@@ -1,12 +1,13 @@
 158.180.231.216,443,IT,Oracle Corporation
 80.211.238.61,443,IT,Aruba SpA Cloud Services Farm2
 80.211.231.169,443,IT,Aruba SpA Cloud Services Farm2
+172.232.206.9,443,IT,Linode
 185.47.172.172,8443,IT,OMC COMPUTERS COMMUNICATIONS LTD
 87.120.237.36,81,IT,GCore Labs SA
 4.232.64.201,443,IT,Microsoft Corporation
 188.213.168.52,443,IT,Aruba SpA Cloud Services Farm2
 38.180.22.20,1001,IT,3NT SOLUTIONS LLP
-45.92.70.218,8443,IT,GCore Labs Customer assignment
+45.92.70.218,8443,IT,GCore Labs SA
 194.165.59.20,443,IT,WorkTitans BV
 80.211.48.113,443,IT,Aruba SpA Cloud Services DC1
 195.231.81.101,443,IT,Aruba SpA Cloud Services IT3
