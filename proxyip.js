@@ -10,7 +10,7 @@ const CONFIG = {
     concurrency: 50,     // DITURUNKAN: 50 per core (Total ~200 thread jika 4 core). Lebih lambat tapi AKURAT.
     timeout: 3500,       // DINAIKKAN: 5 detik. Memberi waktu proxy lambat untuk merespons.
     batchSize: 50,       // Worker melapor ke Master setiap 50 proxy
-    outputDir: 'active_proxies', 
+    outputDir: 'active_proxies',
     files: {
         json: 'proxyip.json',
         txt: 'proxyip.txt',
@@ -33,6 +33,14 @@ const color = {
     bgBlue: "\x1b[44m",
     gray: "\x1b[90m"
 };
+
+// --- ASIA COUNTRY CODES (ISO-3166-1 alpha-2) ---
+const ASIA_COUNTRY_CODES = new Set([
+    "AF","AM","AZ","BH","BD","BT","BN","KH","CN","CY","GE","HK","MO",
+    "IN","ID","IR","IQ","IL","JP","JO","KZ","KW","KG","LA","LB","MY","MV",
+    "MN","MM","NP","KP","KR","OM","PK","PS","PH","QA","SA","SG","LK","SY",
+    "TW","TJ","TH","TL","TR","TM","AE","UZ","VN","YE"
+]);
 
 // --- HELPER FUNCTIONS ---
 function formatDuration(ms) {
@@ -63,7 +71,7 @@ if (cluster.isPrimary) {
         speed: 0,
         activeWorkers: numCPUs
     };
-    
+
     const activeProxies = [];
     const seen = new Set();
     let animationFrame = 0;
@@ -75,18 +83,18 @@ if (cluster.isPrimary) {
         const now = Date.now();
         const elapsed = (now - startTime) / 1000;
         stats.speed = Math.floor(stats.checked / elapsed) || 0;
-        
+
         const pct = stats.total > 0 ? ((stats.checked / stats.total) * 100).toFixed(1) : 0;
         const remaining = stats.total - stats.checked;
         const etaSec = stats.speed > 0 ? remaining / stats.speed : 0;
-        
+
         // --- MODE TTY (Tampilan Keren dengan Progress Bar) ---
         if (isTTY) {
-            const width = 20; 
+            const width = 20;
             const filled = Math.round((width * pct) / 100);
             const barStr = color.green + '█'.repeat(filled) + color.gray + '░'.repeat(width - filled) + color.reset;
             const spin = color.cyan + spinner[animationFrame] + color.reset;
-            
+
             const statusPct = `${color.bright}${pct}%${color.reset}`;
             const statusFound = `${color.gray}Found:${color.reset} ${color.green}${color.bright}${stats.found}${color.reset}`;
             const statusCheck = `${color.gray}Check:${color.reset} ${stats.checked}/${stats.total}`;
@@ -96,7 +104,7 @@ if (cluster.isPrimary) {
             const output = `\r${spin}  ${barStr}  ${statusPct}  |  ${statusFound}  |  ${statusSpeed}  |  ${statusEta}  |  ${statusCheck}`;
             process.stdout.write(output);
             animationFrame = (animationFrame + 1) % spinner.length;
-        } 
+        }
         // --- MODE CI (Log Sederhana agar tidak spam) ---
         else {
             if (now - lastLogTime > 5000) {
@@ -131,7 +139,7 @@ if (cluster.isPrimary) {
     // UPDATE: Menggunakan fetch + Referer (Sesuai script yang berfungsi)
     async function getMyIP() {
         try {
-            const response = await fetch("https://speed.cloudflare.com/meta", { 
+            const response = await fetch("https://speed.cloudflare.com/meta", {
                 headers: { "Referer": "https://speed.cloudflare.com/" }
             });
             if (!response.ok) throw new Error("Failed");
@@ -151,13 +159,13 @@ if (cluster.isPrimary) {
 
     (async () => {
         if (isTTY) process.stdout.write('\x1b[2J\x1b[0f');
-        
+
         console.log(`${color.bgBlue}${color.white}${color.bright}  ⚡ PROXY CHECKER PRO (Balanced Mode)  ${color.reset}\n`);
 
         const myip = await getMyIP();
         const allProxies = loadProxies();
         stats.total = allProxies.length;
-        
+
         console.log(`${color.dim}IP: ${myip} | Loaded: ${stats.total} proxies | Threads: ${numCPUs * CONFIG.concurrency}${color.reset}\n`);
         console.log(`Environment: ${isTTY ? 'Terminal (Interactive)' : 'CI/Background (Log Mode)'}\n`);
 
@@ -168,7 +176,7 @@ if (cluster.isPrimary) {
         for (let i = 0; i < numCPUs; i++) {
             const worker = cluster.fork();
             const chunk = allProxies.slice(i * chunkSize, (i + 1) * chunkSize);
-            
+
             worker.send({ type: 'START', myip, proxies: chunk });
 
             worker.on('message', (msg) => {
@@ -203,18 +211,18 @@ if (cluster.isPrimary) {
             process.stdout.clearLine(0);
             process.stdout.cursorTo(0);
         }
-        
+
         console.log(`\n${color.green}Scan Selesai!${color.reset}`);
-        
+
         const formatProxyData = (p) => {
             const safeOrg = cleanOrg(p.asOrganization);
-            return `${p.proxy},${p.port},${p.country || 'UNK'},${safeOrg}`; 
+            return `${p.proxy},${p.port},${p.country || 'UNK'},${safeOrg}`;
         };
 
         try {
             // Save JSON
             fs.writeFileSync(CONFIG.files.json, JSON.stringify(activeProxies, null, 2));
-            
+
             // Save TXT & CSV
             const txtContent = activeProxies.map(formatProxyData).join('\n');
             fs.writeFileSync(CONFIG.files.txt, txtContent);
@@ -226,7 +234,7 @@ if (cluster.isPrimary) {
             }
 
             const proxiesByCountry = activeProxies.reduce((acc, p) => {
-                const countryCode = (p.country || 'UNK').toUpperCase(); 
+                const countryCode = (p.country || 'UNK').toUpperCase();
                 if (!acc[countryCode]) acc[countryCode] = [];
                 acc[countryCode].push(p);
                 return acc;
@@ -240,9 +248,29 @@ if (cluster.isPrimary) {
                 filesCreated++;
             }
 
+            // --- GABUNGKAN HASIL ASIA ---
+            const asiaList = activeProxies.filter(p => {
+                const cc = (p.country || "UNK").toUpperCase();
+                return ASIA_COUNTRY_CODES.has(cc);
+            });
+
+            if (asiaList.length > 0) {
+                const asiaContent = asiaList.map(formatProxyData).join('\n');
+
+                // 1) Simpan di folder outputDir
+                const asiaPath = path.join(CONFIG.outputDir, `ASIA.txt`);
+                fs.writeFileSync(asiaPath, asiaContent);
+
+                // 2) Simpan juga di root biar gampang dipakai
+                fs.writeFileSync(`proxyip_asia.txt`, asiaContent);
+            }
+
             console.log(`${color.yellow}Disimpan:${color.reset} ${stats.found} proxies`);
             if (activeProxies.length > 0) {
-                 console.log(`${color.yellow}Fitur Baru:${color.reset} ${filesCreated} file negara dibuat di folder ${CONFIG.outputDir}`);
+                console.log(`${color.yellow}Fitur Baru:${color.reset} ${filesCreated} file negara dibuat di folder ${CONFIG.outputDir}`);
+
+                const asiaCount = asiaList.length;
+                console.log(`${color.yellow}Asia:${color.reset} ${asiaCount} proxies digabung ke ${CONFIG.outputDir}/ASIA.txt (dan proxyip_asia.txt)`);
             }
 
         } catch (e) {
@@ -302,7 +330,7 @@ if (cluster.isPrimary) {
                 while (activePromises < CONFIG.concurrency && currentIndex < proxies.length) {
                     const proxyStr = proxies[currentIndex++];
                     activePromises++;
-                    
+
                     checkProxy(proxyStr, myip)
                         .then((result) => {
                             pendingChecked++;
@@ -329,7 +357,7 @@ if (cluster.isPrimary) {
 
             let socket;
             let timer;
-            
+
             const done = (res) => {
                 if (timer) clearTimeout(timer);
                 if (socket && !socket.destroyed) socket.destroy();
@@ -338,22 +366,22 @@ if (cluster.isPrimary) {
 
             timer = setTimeout(() => done(null), CONFIG.timeout);
             const startTime = Date.now();
-            
+
             try {
                 // Koneksi Raw TLS
                 socket = tls.connect({
-                    host: host, 
-                    port: portNum, 
-                    servername: 'speed.cloudflare.com', 
-                    rejectUnauthorized: false, 
-                    timeout: CONFIG.timeout 
+                    host: host,
+                    port: portNum,
+                    servername: 'speed.cloudflare.com',
+                    rejectUnauthorized: false,
+                    timeout: CONFIG.timeout
                 }, () => {
                     // HEADER WAJIB: Referer
                     const request = `GET /meta HTTP/1.1\r\n` +
-                                    `Host: speed.cloudflare.com\r\n` +
-                                    `User-Agent: Mozilla/5.0\r\n` +
-                                    `Referer: https://speed.cloudflare.com/\r\n` +
-                                    `Connection: close\r\n\r\n`;
+                        `Host: speed.cloudflare.com\r\n` +
+                        `User-Agent: Mozilla/5.0\r\n` +
+                        `Referer: https://speed.cloudflare.com/\r\n` +
+                        `Connection: close\r\n\r\n`;
                     socket.write(request);
                 });
 
@@ -368,7 +396,7 @@ if (cluster.isPrimary) {
                         // LOGIKA PARSING ROBUST
                         const parts = data.split('\r\n\r\n');
                         const body = parts.length > 1 ? parts.slice(1).join('\r\n\r\n') : parts[0];
-                        
+
                         if (body) {
                             let info;
                             try {
@@ -381,7 +409,7 @@ if (cluster.isPrimary) {
                                     info = JSON.parse(body.substring(first, last + 1));
                                 }
                             }
-                            
+
                             if (info && info.clientIp && info.clientIp !== myip) {
                                 done({
                                     proxy: host,
