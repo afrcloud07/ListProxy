@@ -5,14 +5,16 @@
 62.60.231.190,443,SE,Aeza International LTD
 158.179.206.143,443,SE,oracle
 172.232.157.252,2053,SE,Linode
+129.151.198.3,8443,SE,Oracle Corporation
 77.221.137.87,443,SE,Aeza International LTD
 178.73.220.132,443,SE,Swedish Infra
 83.147.254.107,443,SE,Aeza International LTD
 83.147.254.115,443,SE,Aeza International LTD
 83.147.254.168,443,SE,Aeza International LTD
-83.147.254.188,443,SE,Aeza International LTD
 83.147.254.243,443,SE,Aeza International LTD
+83.147.254.188,443,SE,Aeza International LTD
 83.147.254.245,443,SE,Aeza International LTD
+83.147.254.66,443,SE,Aeza International LTD
 83.147.254.63,443,SE,Aeza International LTD
 83.147.254.71,443,SE,Aeza International LTD
 83.219.250.104,8090,SE,Baykov Ilya Sergeevich
@@ -37,10 +39,10 @@
 91.184.240.196,443,SE,Aeza International LTD
 103.45.246.200,8443,SE,OMC COMPUTERS COMMUNICATIONS LTD
 185.139.228.126,443,SE,OMC COMPUTERS COMMUNICATIONS LTD
-91.186.219.15,443,SE,Aeza International LTD
-202.181.177.178,443,SE,Privex Sweden General Customers
 45.153.187.209,2053,SE,MVPS LTD
 45.153.187.209,8443,SE,MVPS LTD
+91.186.219.15,443,SE,Aeza International LTD
+202.181.177.178,443,SE,Privex Sweden General Customers
 192.145.30.27,443,SE,Baykov Ilya Sergeevich
 46.246.97.238,2053,SE,BlueVPS OU Url httpswwwbluevpscom
 46.246.97.238,8443,SE,BlueVPS OU Url httpswwwbluevpscom
@@ -49,5 +51,4 @@
 45.82.80.96,443,SE,Internetport Sweden AB
 109.120.134.216,443,SE,Aeza International LTD
 109.120.135.100,443,SE,Aeza International LTD
-78.40.117.65,8443,SE,ALEXHOST SRL
 213.176.92.220,2096,SE,Aeza International LTD
