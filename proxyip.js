@@ -8,7 +8,7 @@ const path = require("node:path");
 // --- KONFIGURASI ---
 const CONFIG = {
     concurrency: 30,     // DITURUNKAN: 50 per core (Total ~200 thread jika 4 core). Lebih lambat tapi AKURAT.
-    timeout: 4000,       // DINAIKKAN: 5 detik. Memberi waktu proxy lambat untuk merespons.
+    timeout: 5000,       // DINAIKKAN: 5 detik. Memberi waktu proxy lambat untuk merespons.
     batchSize: 30,       // Worker melapor ke Master setiap 50 proxy
     outputDir: 'active_proxies',
     files: {
