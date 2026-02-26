@@ -3,5 +3,5 @@
 94.230.184.94,2053,RS,Serbia BroadBandSrpske Kablovske mreze doo
 94.230.184.94,8443,RS,Serbia BroadBandSrpske Kablovske mreze doo
 45.89.55.200,8443,RS,WorkTitans BV
-109.92.179.156,12170,RS,Telekom Srbija ADSL users
 45.89.55.70,8443,RS,WorkTitans BV
+109.92.179.156,12170,RS,Telekom Srbija ADSL users
