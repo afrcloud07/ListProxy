@@ -228,7 +228,7 @@ if (cluster.isPrimary) {
             fs.writeFileSync(CONFIG.files.txt, txtContent);
             fs.writeFileSync(CONFIG.files.csv, txtContent);
 
-            // Save per Country (Fitur retained)
+            // Save per Country ( retained)
             if (!fs.existsSync(CONFIG.outputDir)) {
                 fs.mkdirSync(CONFIG.outputDir, { recursive: true });
             }
@@ -249,21 +249,38 @@ if (cluster.isPrimary) {
             }
 
             // --- GABUNGKAN HASIL ASIA ---
-            const asiaList = activeProxies.filter(p => {
-                const cc = (p.country || "UNK").toUpperCase();
-                return ASIA_COUNTRY_CODES.has(cc);
-            });
+            // --- GABUNGKAN HASIL ASIA ---
+const asiaList = activeProxies.filter(p => {
+  const cc = (p.country || "UNK").toUpperCase();
+  return ASIA_COUNTRY_CODES.has(cc);
+});
 
-            if (asiaList.length > 0) {
-                const asiaContent = asiaList.map(formatProxyData).join('\n');
+if (asiaList.length > 0) {
 
-                // 1) Simpan di folder outputDir
-                const asiaPath = path.join(CONFIG.outputDir, `ASIA.txt`);
-                fs.writeFileSync(asiaPath, asiaContent);
+  // ✅ TEMPel DI SINI (SEBELUM asiaContent dibuat)
+  const ASIA_PRIORITY = ["ID","SG","JP","MY","TH","VN","PH","KR","TW","HK","CN","IN"];
+  const prio = (cc) => {
+    const i = ASIA_PRIORITY.indexOf(cc);
+    return i === -1 ? 999 : i;
+  };
 
-                // 2) Simpan juga di root biar gampang dipakai
-                fs.writeFileSync(`proxyip_asia.txt`, asiaContent);
-            }
+  asiaList.sort((a, b) => {
+    const ca = (a.country || 'UNK').toUpperCase();
+    const cb = (b.country || 'UNK').toUpperCase();
+    const pa = prio(ca), pb = prio(cb);
+    if (pa !== pb) return pa - pb;
+    if (ca !== cb) return ca.localeCompare(cb);
+    return (a.latency || 0) - (b.latency || 0);
+  });
+
+  // Baru bikin content setelah di-sort
+  const asiaContent = asiaList.map(formatProxyData).join('\n');
+
+  const asiaPath = path.join(CONFIG.outputDir, `ASIA.txt`);
+  fs.writeFileSync(asiaPath, asiaContent);
+
+  fs.writeFileSync(`proxyip_asia.txt`, asiaContent);
+}
 
             console.log(`${color.yellow}Disimpan:${color.reset} ${stats.found} proxies`);
             if (activeProxies.length > 0) {
