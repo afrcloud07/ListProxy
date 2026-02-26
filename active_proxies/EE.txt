@@ -1,30 +1,31 @@
 176.97.74.132,2053,EE,IROKO Networks Corporation
-176.97.74.41,2053,EE,IROKO Networks Corporation
-176.97.74.41,8443,EE,IROKO Networks Corporation
 176.97.74.51,2053,EE,IROKO Networks Corporation
-69.12.83.134,443,EE,HostPapa
+176.97.74.41,8443,EE,IROKO Networks Corporation
+176.97.74.41,2053,EE,IROKO Networks Corporation
 69.12.83.170,443,EE,HostPapa
-138.124.4.44,8443,EE,Baykov Ilya Sergeevich
+69.12.83.134,443,EE,HostPapa
 138.124.4.38,443,EE,Baykov Ilya Sergeevich
-80.79.121.46,443,EE,Aktsiaselts WaveCom
+138.124.4.44,8443,EE,Baykov Ilya Sergeevich
 80.79.123.100,443,EE,Aktsiaselts WaveCom
+80.79.121.46,443,EE,Aktsiaselts WaveCom
 185.23.236.111,443,EE,ITDevelop DOO
 185.36.140.105,443,EE,Brainoza OU
 185.36.140.228,2053,EE,Brainoza OU
-185.36.141.121,443,EE,Brainoza OU
 185.36.140.228,8443,EE,Brainoza OU
+185.36.141.121,443,EE,Brainoza OU
 185.36.141.193,443,EE,Brainoza OU
 185.36.141.41,443,EE,Brainoza OU
 185.36.141.81,443,EE,Brainoza OU
-38.180.248.29,443,EE,3NT SOLUTIONS LLP
+185.4.72.98,8443,EE,Network for hosting services
 185.4.73.45,443,EE,IPv6 network for hosting services
 185.4.72.98,2053,EE,Network for hosting services
-185.4.72.98,8443,EE,Network for hosting services
+38.180.248.29,443,EE,3NT SOLUTIONS LLP
 38.180.248.167,8443,EE,3NT SOLUTIONS LLP
 38.180.216.120,443,EE,3NT SOLUTIONS LLP
 37.252.5.75,443,EE,IROKO Networks Corporation
 193.42.112.66,8443,EE,ITDevelop DOO
 193.42.112.66,2053,EE,ITDevelop DOO
+45.129.199.80,8443,EE,BlueVPS OU
 109.235.246.34,443,EE,AS INFONET
 45.129.199.232,443,EE,BlueVPS OU
 45.129.199.184,8443,EE,BlueVPS OU
@@ -34,17 +35,17 @@
 46.22.210.175,8500,EE,SOLUS KVM VPS POOL
 46.22.211.37,443,EE,Aktsiaselts WaveCom
 46.22.211.46,443,EE,Aktsiaselts WaveCom
-185.252.177.73,443,EE,EENetwork
 46.36.221.147,8443,EE,Network for hosting services
-46.36.221.147,2053,EE,Network for hosting services
 46.36.223.141,443,EE,Network for hosting services
+46.36.221.147,2053,EE,Network for hosting services
+185.252.177.73,443,EE,EENetwork
 45.12.28.10,443,EE,Brainoza OU
 69.12.83.249,8443,EE,RAKAR INVESTMENTS HOLDING BV
 69.12.83.246,8443,EE,HostPapa
-5.101.179.212,2053,EE,Network for hosting services
-5.101.180.125,2053,EE,Network for hosting services
-5.101.179.212,8443,EE,Network for hosting services
 5.101.180.125,8443,EE,Network for hosting services
+5.101.179.212,2053,EE,Network for hosting services
+5.101.179.212,8443,EE,Network for hosting services
+5.101.180.125,2053,EE,Network for hosting services
 5.101.180.145,443,EE,Network for hosting services
 5.42.221.160,8443,EE,HostWorld OU
 159.253.23.238,443,EE,IPv6 network for hosting services
