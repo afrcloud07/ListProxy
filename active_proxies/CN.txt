@@ -1,8 +1,6 @@
 39.98.224.123,443,CN,Aliyun Computing Co LTD
 120.204.51.3,443,CN,China Mobile Communications Corporation shanghai company
 47.92.245.88,443,CN,Aliyun Computing Co LTD
-216.24.184.171,95,CN,CHINANET Anhui province network
 47.92.161.8,443,CN,Aliyun Computing Co LTD
 36.133.126.13,443,CN,China Mobile Communications Corporation
-117.50.80.157,1234,CN,Shanghai UCloud Information Technology Company Limited
 220.196.190.122,443,CN,China Unicom
