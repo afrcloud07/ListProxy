@@ -22,13 +22,12 @@
 83.147.254.188,443,SE,Aeza International LTD
 83.147.254.243,443,SE,Aeza International LTD
 83.147.254.245,443,SE,Aeza International LTD
-83.147.254.66,443,SE,Aeza International LTD
 83.147.254.63,443,SE,Aeza International LTD
 83.147.254.71,443,SE,Aeza International LTD
 83.219.250.104,8090,SE,Baykov Ilya Sergeevich
 83.219.250.141,443,SE,Baykov Ilya Sergeevich
-46.246.97.238,2053,SE,BlueVPS OU Url httpswwwbluevpscom
 46.246.97.238,8443,SE,BlueVPS OU Url httpswwwbluevpscom
+46.246.97.238,2053,SE,BlueVPS OU Url httpswwwbluevpscom
 172.234.96.64,8443,SE,Linode
 172.232.157.252,8443,SE,Linode
 70.34.218.89,443,SE,The Constant Company LLC
@@ -38,6 +37,7 @@
 45.82.80.96,443,SE,Internetport Sweden AB
 188.126.77.155,2053,SE,ISPIRIA Networks Ltd
 188.126.77.155,8443,SE,ISPIRIA Networks Ltd
+78.40.117.65,8443,SE,ALEXHOST SRL
 16.16.45.85,8443,SE,Amazon Data Services Sweden
 13.48.175.183,2053,SE,Amazon Data Services Sweden
 16.16.45.85,2053,SE,Amazon Data Services Sweden

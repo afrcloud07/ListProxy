@@ -4,6 +4,7 @@
 195.231.81.101,443,IT,Aruba SpA Cloud Services IT3
 80.211.238.61,443,IT,Aruba SpA Cloud Services Farm2
 80.211.231.169,443,IT,Aruba SpA Cloud Services Farm2
+172.232.206.9,443,IT,Linode
 5.249.146.98,443,IT,Aruba SpA Cloud Services Farm2
 5.253.43.216,443,IT,WorkTitans BV
 185.47.172.172,8443,IT,OMC COMPUTERS COMMUNICATIONS LTD

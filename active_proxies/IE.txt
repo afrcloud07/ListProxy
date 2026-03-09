@@ -18,4 +18,3 @@
 194.87.245.181,8443,IE,Baxet Group Inc
 194.87.245.135,2053,IE,Baxet Group Inc
 194.87.245.253,443,IE,Cloudflare London LLC
-194.87.245.181,2053,IE,Baxet Group Inc
