@@ -6,8 +6,8 @@
 94.177.8.122,2053,AT,Alwyzon a trading name of Hohl IT eU
 94.177.8.122,8443,AT,Alwyzon a trading name of Hohl IT eU
 94.177.8.78,2053,AT,Alwyzon a trading name of Hohl IT eU
-203.98.67.74,2053,AT,Alwyzon a trading name of Hohl IT eU
 203.98.67.74,8443,AT,Alwyzon a trading name of Hohl IT eU
+203.98.67.74,2053,AT,Alwyzon a trading name of Hohl IT eU
 77.73.131.125,443,AT,Aeza International LTD
 151.236.8.190,443,AT,EDIS IPv6 Infrastructure in Austria
 83.138.55.120,8443,AT,Alwyzon a trading name of Hohl IT eU
