@@ -1,6 +1,6 @@
 185.104.63.203,443,AT,ZetServers Vienna
-94.177.8.122,8443,AT,Alwyzon a trading name of Hohl IT eU
 94.177.8.122,2053,AT,Alwyzon a trading name of Hohl IT eU
+94.177.8.122,8443,AT,Alwyzon a trading name of Hohl IT eU
 94.177.8.78,2053,AT,Alwyzon a trading name of Hohl IT eU
 151.236.8.190,443,AT,EDIS IPv6 Infrastructure in Austria
 83.138.55.252,8443,AT,Alwyzon a trading name of Hohl IT eU
