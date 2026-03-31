@@ -1,11 +1,11 @@
 58.228.46.173,50003,KR,SK Broadband Co Ltd
+193.122.115.67,4434,KR,Oracle Public Cloud
 193.122.126.64,53777,KR,Oracle Public Cloud
 59.6.239.208,12203,KR,KT
 131.186.17.132,443,KR,Oracle Public Cloud
 193.123.253.225,4333,KR,Oracle Corporation
 131.186.27.112,2096,KR,Oracle Public Cloud
 64.110.70.205,23022,KR,Oracle Corporation
-193.122.107.234,443,KR,Oracle Public Cloud
 130.162.130.105,443,KR,Oracle Public Cloud
 175.202.135.114,12427,KR,Korea Telecom
 144.24.73.232,443,KR,Oracle Corp UK Ltd
@@ -13,8 +13,8 @@
 1.249.45.86,12112,KR,SK Broadband Co Ltd
 131.186.24.124,587,KR,Oracle Public Cloud
 132.145.84.148,39567,KR,Oracle Public Cloud
-132.145.88.82,38066,KR,Oracle Public Cloud
 132.226.21.116,6056,KR,Oracle Public Cloud
+132.145.88.82,38066,KR,Oracle Public Cloud
 132.226.23.92,22053,KR,Oracle Public Cloud
 138.2.122.197,39863,KR,Oracle Corporation
 112.166.95.230,50001,KR,Korea Telecom
@@ -40,12 +40,12 @@
 118.218.193.166,12129,KR,SK Broadband Co Ltd
 118.223.252.190,50001,KR,SK Broadband Co Ltd
 220.72.161.178,10007,KR,Korea Telecom
+39.115.137.14,443,KR,SK Broadband Co Ltd
 123.111.169.70,443,KR,SK Broadband Co Ltd
+131.186.22.39,34237,KR,Oracle Corporation
 158.180.69.78,12198,KR,Cloudflare Inc
 158.247.250.157,81,KR,The Constant Company LLC
 129.154.212.17,20180,KR,Oracle Corporation
 129.154.223.89,15800,KR,Oracle Corporation
 129.154.48.176,36355,KR,Oracle Corporation
 129.154.54.67,19567,KR,Oracle Corporation
-131.186.22.39,34237,KR,Oracle Corporation
-64.110.75.145,443,KR,Oracle Corporation
