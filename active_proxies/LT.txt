@@ -13,10 +13,10 @@
 185.237.185.110,2053,LT,oneprovidercom Vilnius Infrastructure
 185.237.185.158,443,LT,Oneprovidercom Vilnius Infrastructure
 185.237.185.182,2053,LT,Oneprovidercom Vilnius Infrastructure
-5.199.173.195,443,LT,UAB Cherry Servers
 5.199.162.130,443,LT,UAB Cherry Servers
+5.199.173.195,443,LT,UAB Cherry Servers
 45.12.129.237,8443,LT,WorkTitans BV
-89.40.15.168,443,LT,UAB Interneto vizija
 212.24.107.76,8443,LT,UAB Interneto vizija
 46.29.234.109,8443,LT,GLOBAL CONNECTIVITY SOLUTIONS LLP
+89.40.15.168,443,LT,UAB Interneto vizija
 212.192.23.24,443,LT,Baxet Group Inc
