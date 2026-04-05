@@ -1,5 +1,4 @@
 134.209.148.128,443,IN,DigitalOcean LLC
-143.110.247.34,443,IN,DigitalOcean LLC
 20.235.105.146,443,IN,Microsoft Corporation
 64.227.174.213,2053,IN,DigitalOcean LLC
 64.227.174.213,8443,IN,DigitalOcean LLC
