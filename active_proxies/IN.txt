@@ -2,7 +2,6 @@
 20.235.105.146,443,IN,Microsoft Corporation
 64.227.174.213,2053,IN,DigitalOcean LLC
 64.227.174.213,8443,IN,DigitalOcean LLC
-134.195.137.107,22473,IN,ReadyDedis LLC
 140.238.225.218,80,IN,Oracle Public Cloud
 146.56.48.138,23010,IN,Oracle Corporation Global software solutions California USA
 216.10.243.159,443,IN,PDR Solutions FZC
