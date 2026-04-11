@@ -10,9 +10,9 @@
 63.32.194.15,8443,IE,Amazon Data Services Ireland Limited
 52.19.138.237,8443,IE,Amazon Data Services Ireland Limited
 54.77.206.41,443,IE,Amazon Technologies Inc
-23.95.225.214,8443,IE,RackNerd LLC
-23.95.225.214,2053,IE,RackNerd LLC
 54.229.164.147,2053,IE,Amazoncom Inc
+23.95.225.214,2053,IE,RackNerd LLC
+23.95.225.214,8443,IE,RackNerd LLC
 159.69.162.184,43333,IE,SA
 194.87.245.135,8443,IE,Baxet Group Inc
 194.87.245.181,8443,IE,Baxet Group Inc
