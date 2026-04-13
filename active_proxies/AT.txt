@@ -1,5 +1,4 @@
 185.104.63.203,443,AT,ZetServers Vienna
-193.233.233.105,443,AT,Aeza International LTD
 94.177.8.122,2053,AT,Alwyzon a trading name of Hohl IT eU
 94.177.8.122,8443,AT,Alwyzon a trading name of Hohl IT eU
 94.177.8.78,2053,AT,Alwyzon a trading name of Hohl IT eU
@@ -9,7 +8,6 @@
 185.119.117.146,8443,AT,IPAX VIRTUAL line server
 46.102.156.144,8443,AT,Alwyzon a trading name of Hohl IT eU
 46.102.156.144,2053,AT,Alwyzon a trading name of Hohl IT eU
-85.192.42.63,443,AT,Aeza International LTD
 38.180.143.51,2053,AT,3NT SOLUTIONS LLP
 38.180.143.51,8443,AT,3NT SOLUTIONS LLP
 213.176.94.61,8443,AT,Aeza International LTD

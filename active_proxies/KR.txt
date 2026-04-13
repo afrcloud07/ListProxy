@@ -1,26 +1,24 @@
-193.122.115.67,4434,KR,Oracle Public Cloud
 193.122.126.64,53777,KR,Oracle Public Cloud
 59.6.239.208,12203,KR,KT
 193.123.253.225,4333,KR,Oracle Corporation
 131.186.27.112,2096,KR,Oracle Public Cloud
-146.56.158.155,443,KR,Oracle Public Cloud
 64.110.70.205,23022,KR,Oracle Corporation
+130.162.130.105,443,KR,Oracle Public Cloud
 175.202.135.114,12427,KR,Korea Telecom
 144.24.73.232,443,KR,Oracle Corp UK Ltd
 158.180.72.60,443,KR,oracle
 1.249.45.86,12112,KR,SK Broadband Co Ltd
 131.186.24.124,587,KR,Oracle Public Cloud
-132.145.84.148,39567,KR,Oracle Public Cloud
 132.145.88.82,38066,KR,Oracle Public Cloud
+132.145.84.148,39567,KR,Oracle Public Cloud
 132.226.21.116,6056,KR,Oracle Public Cloud
 132.226.23.92,22053,KR,Oracle Public Cloud
 138.2.122.197,39863,KR,Oracle Corporation
-138.2.122.191,443,KR,Oracle Corporation
 112.166.95.230,50001,KR,Korea Telecom
 211.48.77.114,12312,KR,Korea Telecom
 144.24.87.69,50001,KR,Oracle Corporation
-140.238.2.81,587,KR,Oracle Public Cloud
 152.67.209.237,22053,KR,Oracle Public Cloud
+140.238.2.81,587,KR,Oracle Public Cloud
 152.67.211.114,58337,KR,Oracle Public Cloud
 140.238.5.75,13644,KR,Oracle Corporation
 146.56.140.79,20309,KR,Cloudflare Inc
@@ -33,8 +31,8 @@
 217.142.138.61,37914,KR,Oracle Svenska AB
 152.70.236.195,30001,KR,Oracle Corporation
 116.93.199.28,12136,KR,SK Broadband Co Ltd
-116.93.199.28,30012,KR,SK Broadband Co Ltd
 116.93.199.28,12020,KR,SK Broadband Co Ltd
+116.93.199.28,30012,KR,SK Broadband Co Ltd
 118.218.193.166,12129,KR,SK Broadband Co Ltd
 118.223.252.190,50001,KR,SK Broadband Co Ltd
 52.141.25.42,443,KR,Microsoft Corporation
@@ -44,7 +42,8 @@
 158.247.250.157,81,KR,The Constant Company LLC
 129.154.212.17,20180,KR,Oracle Corporation
 129.154.223.89,15800,KR,Oracle Corporation
-129.154.54.67,19567,KR,Oracle Corporation
 129.154.48.176,36355,KR,Oracle Corporation
+129.154.54.67,19567,KR,Oracle Corporation
+131.186.22.39,34237,KR,Oracle Public Cloud
+64.110.75.145,443,KR,Oracle Corporation
 106.245.63.110,50001,KR,LG DACOM Corporation
-131.186.22.39,34237,KR,Oracle Corporation
