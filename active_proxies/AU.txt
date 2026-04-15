@@ -4,5 +4,7 @@
 130.162.193.183,15401,AU,Oracle Public Cloud
 152.67.101.72,23010,AU,Oracle Public Cloud
 194.195.252.133,443,AU,Akamai Connected Cloud Linode
+149.28.172.201,443,AU,Vultr Holdings LLC
 45.77.236.204,443,AU,Vultr Holdings LLC
+207.148.80.190,443,AU,The Constant Company LLC
 16.176.42.97,443,AU,Amazon Corporate Services Pty Ltd
