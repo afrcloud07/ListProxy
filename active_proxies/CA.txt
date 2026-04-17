@@ -2,9 +2,8 @@
 172.98.207.58,443,CA,CENTRILOGICCANADA
 69.28.83.244,443,CA,AtlanticNet Toronto LLC
 149.56.14.62,443,CA,OVH Hosting Inc
-104.129.181.152,443,CA,Cluster Logic Inc
 150.230.27.23,16504,CA,Oracle Corporation
 138.197.173.23,443,CA,DigitalOcean LLC
 155.138.128.135,443,CA,Vultr Holdings LLC
-192.18.150.121,27620,CA,Oracle Corporation
+143.198.37.229,443,CA,DigitalOcean LLC
 40.177.65.8,443,CA,Amazon Data Services Canada

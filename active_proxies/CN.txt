@@ -3,4 +3,3 @@
 47.92.161.8,443,CN,Aliyun Computing Co LTD
 36.133.126.13,443,CN,China Mobile Communications Corporation
 220.196.190.122,443,CN,China Unicom
-156.230.12.71,443,CN,263 Shanghai Communications Ltd
