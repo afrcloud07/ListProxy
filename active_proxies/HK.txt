@@ -10,11 +10,12 @@
 8.210.29.68,443,HK,Aliyun Computing CoLTD
 47.76.218.163,443,HK,Alibaba Cloud HK
 5.180.98.146,22827,HK,TEN
+85.208.104.34,8080,HK,Internet Utilities Europe and Asia Limited
+141.11.91.67,8080,HK,HYTRON NETWORK HK
 47.240.15.210,4432,HK,Alibaba Cloud HK
 154.21.201.83,443,HK,NetLab
-85.208.104.34,8080,HK,Internet Utilities Europe and Asia Limited
+38.207.132.101,443,HK,Nearoute Limited
 154.38.116.8,443,HK,STARCLOUD GLOBAL PTE LTD
-141.11.91.67,8080,HK,Tusker Technologies Pty Ltd
 18.162.156.23,12355,HK,Amazon Data Services Hong Kong
 219.76.13.166,443,HK,Hong Kong Telecommunications HKT Limited Mass Internet
 219.76.13.167,443,HK,Hong Kong Telecommunications HKT Limited Mass Internet
@@ -23,9 +24,8 @@
 219.76.13.183,443,HK,Hong Kong Telecommunications HKT Limited Mass Internet
 154.16.10.34,8080,HK,Digital Energy Technologies Limited
 221.125.10.8,57537,HK,HGC Global Communications Limited
-194.156.99.182,8443,HK,FreeNet LLCFZ
 192.131.142.161,46639,HK,365 Group LLC
-156.230.12.71,443,HK,263 Shanghai Communications Ltd
+156.230.12.71,443,HK,263 Global Communication Limited
 223.16.138.113,10201,HK,HGC Global Communications Limited
 223.16.138.113,10002,HK,HGC Global Communications Limited
 223.16.138.113,12457,HK,HGC Global Communications Limited
