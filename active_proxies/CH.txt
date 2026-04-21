@@ -3,8 +3,8 @@
 91.192.102.170,2053,CH,Datasource AG
 91.192.102.170,8443,CH,Datasource AG
 91.192.102.55,443,CH,Datasource AG
-91.245.225.79,2053,CH,GLB Bulut Teknolojisi Limited Sirketi
 91.245.225.17,443,CH,GLB Bulut Teknolojisi Limited Sirketi
+91.245.225.79,2053,CH,GLB Bulut Teknolojisi Limited Sirketi
 91.245.225.79,8443,CH,GLB Bulut Teknolojisi Limited Sirketi
 91.245.225.69,443,CH,GLB Bulut Teknolojisi Limited Sirketi
 91.90.193.138,443,CH,Friendhosting LTD
@@ -32,8 +32,8 @@
 45.95.232.18,8443,CH,GLOBAL CONNECTIVITY SOLUTIONS LLP
 185.195.69.119,2053,CH,Datasource AG
 185.195.69.119,8443,CH,Datasource AG
-185.195.69.209,2053,CH,Datasource AG
 185.195.69.200,8443,CH,Datasource AG
+185.195.69.209,2053,CH,Datasource AG
 38.180.85.203,443,CH,3NT SOLUTIONS LLP
 16.63.207.85,443,CH,Amazon Data Services Switzerland
 194.87.18.92,443,CH,Baxet Group Inc
