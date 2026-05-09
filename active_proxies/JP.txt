@@ -13,6 +13,7 @@
 132.145.127.203,2053,JP,Oracle Public Cloud
 138.2.39.24,443,JP,Oracle Corporation
 64.110.104.30,443,JP,Oracle Corporation
+168.138.212.80,443,JP,Oracle Public Cloud
 140.238.50.134,443,JP,Oracle Public Cloud
 103.106.228.126,2053,JP,oneprovidercom Tokyo Infrastructure
 103.75.118.144,2053,JP,Oneprovidercom Japan Infrastructure
@@ -21,10 +22,10 @@
 150.230.214.172,16957,JP,Oracle Corporation
 131.186.63.89,11655,JP,Oracle Public Cloud
 150.230.5.34,45681,JP,Oracle Corporation
-210.138.37.53,443,JP,CDNetworks co Ltd
 45.11.1.118,44004,JP,CEGRGODigitalVM LLC Tokyo
-138.2.10.217,27446,JP,Oracle Corporation
+210.138.37.53,443,JP,CDNetworks co Ltd
 138.2.10.149,45638,JP,Oracle Corporation
+138.2.10.217,27446,JP,Oracle Corporation
 8.216.121.234,51922,JP,Alibaba Cloud Singapore Private Limited
 138.2.18.82,8880,JP,Oracle Corporation
 138.2.32.76,15821,JP,Oracle Corporation
@@ -34,9 +35,9 @@
 138.3.217.167,587,JP,Oracle Network Information Services
 138.3.222.124,46209,JP,Oracle Network Information Services
 139.162.102.152,7002,JP,Akamai Connected Cloud Linode
+45.66.129.201,443,JP,Virtual Machine Solutions LLC
 140.238.37.103,14782,JP,Oracle Public Cloud
 140.238.38.81,587,JP,Cloudflare Inc
-45.66.129.201,443,JP,Virtual Machine Solutions LLC
 45.77.25.6,27854,JP,Vultr Holdings LLC
 45.77.25.6,48828,JP,Vultr Holdings LLC
 152.69.192.40,57005,JP,Oracle Corporation
@@ -44,17 +45,18 @@
 140.83.57.183,22735,JP,imported inetnum object for OCPL1
 140.83.57.20,13118,JP,imported inetnum object for OCPL1
 149.28.21.222,443,JP,The Constant Company LLC
-167.179.86.6,8443,JP,Vultr Holdings LLC
 140.83.83.65,9872,JP,Oracle Corporation
+167.179.86.6,8443,JP,Vultr Holdings LLC
+66.42.32.115,443,JP,TYOVULTRCUST
 45.77.9.114,443,JP,Vultr Holdings LLC
 167.179.110.68,8443,JP,The Constant Company LLC
 149.28.21.106,443,JP,Vultr Holdings LLC
-64.176.36.17,443,JP,The Constant Company LLC
 217.142.230.253,587,JP,Oracle Corporation
 217.142.250.195,587,JP,Oracle Corporation
+64.176.36.17,443,JP,The Constant Company LLC
 45.32.49.72,9443,JP,Vultr Holdings LLC
-153.121.45.101,443,JP,SAKURA Internet Inc
 103.125.216.22,8443,JP,VPSServercom 24 block for Tokyo location
+153.121.45.101,443,JP,SAKURA Internet Inc
 141.147.152.229,23333,JP,Oracle Corporation
 141.147.183.49,29876,JP,Oracle Corporation
 158.101.146.3,54516,JP,Oracle Public Cloud
@@ -63,4 +65,3 @@
 158.101.154.245,47001,JP,Oracle Public Cloud
 158.101.76.55,21953,JP,Oracle Public Cloud
 158.101.89.113,50443,JP,Oracle Public Cloud
-160.248.7.177,443,JP,Server Hosting Service NTTPCCommunicationsInc
