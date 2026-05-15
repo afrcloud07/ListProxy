@@ -1,6 +1,5 @@
 129.151.198.3,2053,SE,Oracle Corporation
 91.184.240.196,443,SE,Aeza International LTD
-62.60.186.93,443,SE,Iranian Research Organization for Science Technology
 46.226.160.219,443,SE,Aeza International LTD
 62.60.153.87,443,SE,Aeza International LTD
 62.60.159.179,443,SE,Aeza International LTD
@@ -9,7 +8,6 @@
 192.145.30.27,443,SE,Baykov Ilya Sergeevich
 129.151.198.3,8443,SE,Oracle Corporation
 77.221.141.146,443,SE,Aeza International LTD
-103.45.246.200,2053,SE,OMC COMPUTERS COMMUNICATIONS LTD
 206.168.213.106,443,SE,Hostup AB
 109.120.134.216,443,SE,Aeza International LTD
 109.120.135.100,443,SE,Aeza International LTD
@@ -17,8 +15,8 @@
 45.153.187.209,8443,SE,MVPS LTD
 83.147.254.115,443,SE,Aeza International LTD
 83.147.254.168,443,SE,Aeza International LTD
-83.147.254.245,443,SE,Aeza International LTD
 83.147.254.243,443,SE,Aeza International LTD
+83.147.254.245,443,SE,Aeza International LTD
 83.147.254.63,443,SE,Aeza International LTD
 83.147.254.71,443,SE,Aeza International LTD
 83.219.250.141,443,SE,Baykov Ilya Sergeevich
@@ -26,12 +24,11 @@
 45.82.80.96,443,SE,Internetport Sweden AB
 188.126.77.155,2053,SE,ISPIRIA Networks Ltd
 188.126.77.155,8443,SE,ISPIRIA Networks Ltd
-78.40.117.65,8443,SE,ALEXHOST SRL
 16.16.45.85,8443,SE,Amazon Data Services Sweden
 16.16.45.85,2053,SE,Amazon Data Services Sweden
-51.21.156.13,443,SE,A100 ROW Inc
+89.22.230.215,443,SE,Aeza International LTD
 89.22.232.39,443,SE,Aeza International LTD
 89.22.233.52,443,SE,Aeza International LTD
+51.21.156.13,443,SE,A100 ROW Inc
 89.22.236.205,443,SE,Aeza International LTD
 51.20.160.11,443,SE,A100 ROW Inc
-103.45.246.200,8443,SE,OMC COMPUTERS COMMUNICATIONS LTD

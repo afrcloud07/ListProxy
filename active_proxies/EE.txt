@@ -6,13 +6,13 @@
 69.12.83.134,443,EE,HostPapa
 69.12.83.170,443,EE,HostPapa
 138.124.4.38,443,EE,Baykov Ilya Sergeevich
-80.79.121.46,443,EE,Aktsiaselts WaveCom
 80.79.123.100,443,EE,Aktsiaselts WaveCom
+80.79.121.46,443,EE,Aktsiaselts WaveCom
 5.101.180.125,8443,EE,Network for hosting services
 5.101.180.125,2053,EE,Network for hosting services
 5.101.180.145,443,EE,Network for hosting services
-46.22.210.175,8500,EE,SOLUS KVM VPS POOL
 46.22.210.175,2053,EE,SOLUS KVM VPS POOL
+46.22.210.175,8500,EE,SOLUS KVM VPS POOL
 46.22.211.46,443,EE,Aktsiaselts WaveCom
 46.36.221.147,8443,EE,Network for hosting services
 46.36.221.147,2053,EE,Network for hosting services
@@ -33,3 +33,4 @@
 69.12.83.246,8443,EE,HostPapa
 159.69.162.184,10020,EE,SA
 159.69.162.184,43443,EE,Inter Connects Inc
+45.129.199.80,8443,EE,BlueVPS OU
