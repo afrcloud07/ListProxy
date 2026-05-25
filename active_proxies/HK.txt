@@ -20,9 +20,9 @@
 18.162.156.23,12355,HK,Amazon Data Services Hong Kong
 221.125.10.8,57537,HK,HGC Global Communications Limited
 192.131.142.161,46639,HK,365 Group LLC
-156.230.12.71,443,HK,263 Shanghai Communications Ltd
-43.198.204.35,443,HK,Amazoncom Inc
+156.230.12.71,443,HK,263 Global Communication Limited
 194.156.99.182,8443,HK,FreeNet LLCFZ
+43.198.204.35,443,HK,Amazoncom Inc
 45.38.42.198,2053,HK,Subnet Digital LLC
 43.154.124.136,26666,HK,6 COLLYER QUAY
 154.18.161.172,18443,HK,Hytron Network Services Limited
