@@ -1,3 +1,4 @@
+146.56.136.40,443,KR,500 Oracle Parkway
 193.122.115.67,4434,KR,Oracle Public Cloud
 59.6.239.208,12203,KR,KT
 193.123.253.225,4333,KR,Oracle Corporation
@@ -9,18 +10,16 @@
 158.180.72.60,443,KR,oracle
 131.186.24.124,587,KR,Oracle Public Cloud
 132.145.84.148,39567,KR,Oracle Public Cloud
-132.226.21.116,6056,KR,Oracle Public Cloud
 132.226.23.92,22053,KR,Oracle Public Cloud
-138.2.122.191,443,KR,Oracle Corporation
-112.166.95.230,50001,KR,Korea Telecom
 211.48.77.114,12312,KR,Korea Telecom
-182.31.122.164,12574,KR,Seokyung Cable Television Co Ltd
-140.238.2.81,587,KR,Oracle Public Cloud
 152.67.209.237,22053,KR,Oracle Public Cloud
+140.238.2.81,587,KR,Oracle Public Cloud
 152.67.211.114,58337,KR,Oracle Public Cloud
 140.238.5.75,13644,KR,Oracle Public Cloud
 144.24.87.69,50001,KR,Oracle Corporation
 152.69.229.175,22558,KR,Oracle Corporation
+141.164.35.158,443,KR,The Constant Company LLC
+141.164.48.141,443,KR,The Constant Company LLC
 146.56.140.79,20309,KR,Cloudflare Inc
 146.56.140.79,22561,KR,Cloudflare London LLC
 146.56.140.79,44699,KR,Cloudflare London LLC
@@ -35,4 +34,3 @@
 158.247.250.157,81,KR,The Constant Company LLC
 129.154.212.17,20180,KR,Oracle Corporation
 64.110.75.145,443,KR,Oracle Corporation
-106.245.63.110,50001,KR,LG DACOM Corporation
