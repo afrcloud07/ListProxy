@@ -9,4 +9,5 @@
 54.77.206.41,443,IE,Amazon Technologies Inc
 54.229.164.147,2053,IE,Amazoncom Inc
 159.69.162.184,43333,IE,SA
+54.38.219.132,12055,IE,Evolution Host Ltd
 194.87.245.135,2053,IE,Baxet Group Inc
