@@ -1,2 +1,1 @@
 109.185.236.240,443,MD,JSC Moldtelecom SA
-185.250.148.240,443,MD,WorkTitans BV
