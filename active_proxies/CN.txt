@@ -1,5 +1,4 @@
 39.98.224.123,443,CN,Aliyun Computing Co LTD
-116.198.40.47,443,CN,Beijing Jingdong 360 Degree Ecommerce Co Ltd
 47.92.245.88,443,CN,Aliyun Computing Co LTD
 36.133.126.13,443,CN,China Mobile Communications Corporation
 47.92.161.8,443,CN,Aliyun Computing Co LTD
