@@ -1,4 +1,3 @@
-85.206.172.44,443,LT,SolusVM priskirti adresai
 176.223.136.90,443,LT,UAB Interneto vizija
 195.181.244.107,443,LT,UAB Interneto vizija
 80.209.237.38,2053,LT,UAB Interneto vizija
