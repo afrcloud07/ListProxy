@@ -5,7 +5,6 @@
 167.99.183.13,443,CA,DigitalOcean LLC
 149.56.14.62,443,CA,OVH Hosting Inc
 104.129.181.152,443,CA,Cluster Logic Inc
-137.184.168.37,443,CA,DigitalOcean LLC
 150.230.27.23,16504,CA,Oracle Corporation
 155.138.128.135,443,CA,Vultr Holdings LLC
 40.177.65.8,443,CA,Amazon Data Services Canada
