@@ -3,6 +3,6 @@
 80.211.238.61,443,IT,Aruba SpA Cloud Services Farm2
 5.249.146.98,443,IT,Aruba SpA Cloud Services Farm2
 185.47.172.172,8443,IT,OMC COMPUTERS COMMUNICATIONS LTD
-4.232.64.201,443,IT,Microsoft Corporation
 87.120.237.36,81,IT,GCore Labs SA
+4.232.64.201,443,IT,Microsoft Corporation
 129.152.2.127,1488,IT,Oracle Corporation
