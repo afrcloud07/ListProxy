@@ -3,7 +3,6 @@
 219.76.13.177,443,HK,Hong Kong Telecommunications HKT Limited Mass Internet
 103.251.89.149,29876,HK,HengTian HK DataCenter
 8.210.96.197,12902,HK,Aliyun Computing CoLTD
-8.218.36.133,9010,HK,Alibaba Cloud Singapore Private Limited
 8.210.29.68,443,HK,Aliyun Computing CoLTD
 154.38.116.8,443,HK,STARCLOUD GLOBAL PTE LTD
 141.11.91.67,8080,HK,Tusker Technologies Pty Ltd

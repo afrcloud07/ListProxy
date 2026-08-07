@@ -8,4 +8,3 @@
 98.70.26.236,443,IN,Microsoft Corporation
 20.235.220.189,443,IN,Microsoft Corporation
 152.70.76.104,46000,IN,Oracle Corporation
-219.65.73.81,443,IN,Reliance Jio Infocomm Limited
