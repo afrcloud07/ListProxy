@@ -19,8 +19,8 @@
 217.142.138.61,37914,KR,Oracle Svenska AB
 146.56.42.21,7777,KR,Cloudflare London LLC
 146.56.99.22,20443,KR,Oracle Corporation Global software solutions California USA
+152.70.89.135,587,KR,Oracle Corporation
 39.115.137.14,443,KR,SK Broadband Co Ltd
 123.111.169.70,443,KR,SK Broadband Co Ltd
 158.180.69.78,12198,KR,Cloudflare Inc
 158.247.250.157,81,KR,The Constant Company LLC
-64.110.75.145,443,KR,Oracle Corporation
