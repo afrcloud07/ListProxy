@@ -1,1 +1,1 @@
-5.181.158.96,443,MD,MivoCloud SRL
+5.181.158.96,443,MD,MivoCloud
