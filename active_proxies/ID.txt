@@ -1,2 +1,1 @@
-172.232.249.53,443,ID,Linode
 36.95.152.58,12137,ID,PT Telekomunikasi Indonesia
