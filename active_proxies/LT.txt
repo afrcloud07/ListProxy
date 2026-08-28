@@ -1,6 +1,6 @@
 195.181.244.107,443,LT,UAB Interneto vizija
-80.209.237.38,2053,LT,UAB Interneto vizija
 195.181.244.240,8443,LT,UAB Interneto vizija
+80.209.237.38,2053,LT,UAB Interneto vizija
 212.24.104.79,8443,LT,UAB Interneto vizija
 185.237.185.110,2053,LT,oneprovidercom Vilnius Infrastructure
 185.237.185.182,2053,LT,Oneprovidercom Vilnius Infrastructure
