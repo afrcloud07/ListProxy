@@ -13,8 +13,8 @@
 178.255.46.176,443,PL,Artnet Sp z oo
 95.164.90.133,443,PL,Netassist Limited
 151.115.61.151,2053,PL,Warsaw Poland
-80.211.249.240,2053,PL,Aruba SpA Cloud Services PL1
 80.211.249.240,8443,PL,Aruba SpA Cloud Services PL1
+80.211.249.240,2053,PL,Aruba SpA Cloud Services PL1
 80.211.249.68,8443,PL,Aruba SpA Cloud Services PL1
 80.211.249.68,2053,PL,Aruba SpA Cloud Services PL1
 45.144.50.4,443,PL,Newserverlife LLC
