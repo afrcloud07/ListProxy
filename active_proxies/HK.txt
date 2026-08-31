@@ -10,4 +10,3 @@
 219.76.13.169,443,HK,Hong Kong Telecommunications HKT Limited Mass Internet
 43.198.204.35,443,HK,Amazoncom Inc
 221.125.10.8,57537,HK,HGC Global Communications Limited
-43.154.124.136,26666,HK,6 COLLYER QUAY
