@@ -5,11 +5,10 @@
 132.145.84.148,39567,KR,Oracle Public Cloud
 132.226.21.116,6056,KR,Oracle Public Cloud
 192.46.231.158,443,KR,The Constant Company LLC
-140.238.5.75,13644,KR,Oracle Public Cloud
 152.67.211.114,58337,KR,Oracle Public Cloud
+140.238.5.75,13644,KR,Oracle Public Cloud
 144.24.87.69,50001,KR,Oracle Corporation
 152.69.229.175,22558,KR,Oracle Corporation
-217.142.138.61,37914,KR,Oracle Svenska AB
 146.56.42.21,7777,KR,Cloudflare London LLC
 146.56.99.22,20443,KR,Oracle Corporation Global software solutions California USA
 152.70.89.135,587,KR,Oracle Corporation
