@@ -4,6 +4,7 @@
 131.186.24.124,587,KR,Oracle Public Cloud
 132.145.84.148,39567,KR,Oracle Public Cloud
 132.226.21.116,6056,KR,Oracle Public Cloud
+138.2.122.191,443,KR,Oracle Corporation
 192.46.231.158,443,KR,The Constant Company LLC
 152.67.211.114,58337,KR,Oracle Public Cloud
 140.238.5.75,13644,KR,Oracle Public Cloud
@@ -13,5 +14,6 @@
 146.56.99.22,20443,KR,Oracle Corporation Global software solutions California USA
 152.70.89.135,587,KR,Oracle Corporation
 123.111.169.70,443,KR,SK Broadband Co Ltd
+124.111.97.136,12155,KR,SK Broadband Co Ltd
 39.115.137.14,443,KR,SK Broadband Co Ltd
 158.247.250.157,81,KR,The Constant Company LLC
