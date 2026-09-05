@@ -4,10 +4,9 @@
 132.145.127.203,8443,JP,Oracle Public Cloud
 141.147.185.63,443,JP,Oracle Corporation
 168.138.197.147,12345,JP,Oracle Public Cloud
-64.110.101.125,443,JP,Oracle Corporation
 140.238.58.181,2053,JP,Oracle Public Cloud
-138.2.5.136,443,JP,Cloudflare London LLC
 132.145.127.203,2053,JP,Oracle Public Cloud
+138.2.5.136,443,JP,Cloudflare London LLC
 64.110.104.30,443,JP,Oracle Corporation
 168.138.212.80,443,JP,Oracle Public Cloud
 140.238.50.134,443,JP,Oracle Public Cloud
@@ -28,6 +27,7 @@
 45.11.1.118,44004,JP,CEGRGODigitalVM LLC Tokyo
 140.238.38.81,587,JP,Cloudflare Inc
 45.76.198.248,443,JP,Vultr Holdings LLC
+45.77.9.114,443,JP,Vultr Holdings LLC
 167.179.110.68,8443,JP,The Constant Company LLC
 149.28.21.106,443,JP,Vultr Holdings LLC
 64.176.36.17,443,JP,The Constant Company LLC
@@ -42,4 +42,3 @@
 141.147.152.229,23333,JP,Oracle Corporation
 158.101.154.245,47001,JP,Oracle Public Cloud
 158.101.76.55,21953,JP,Oracle Public Cloud
-160.248.7.177,443,JP,Server Hosting Service NTTPCCommunicationsInc
