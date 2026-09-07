@@ -3,5 +3,6 @@
 8.210.29.68,443,HK,Aliyun Computing CoLTD
 219.76.13.166,443,HK,Hong Kong Telecommunications HKT Limited Mass Internet
 219.76.13.167,443,HK,Hong Kong Telecommunications HKT Limited Mass Internet
-219.76.13.181,443,HK,Hong Kong Telecommunications HKT Limited Mass Internet
 219.76.13.169,443,HK,Hong Kong Telecommunications HKT Limited Mass Internet
+219.76.13.181,443,HK,Hong Kong Telecommunications HKT Limited Mass Internet
+221.125.10.8,57537,HK,HGC Global Communications Limited

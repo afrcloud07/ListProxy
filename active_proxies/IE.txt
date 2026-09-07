@@ -6,5 +6,4 @@
 63.32.194.15,8443,IE,Amazon Data Services Ireland Limited
 54.77.206.41,443,IE,Amazon Technologies Inc
 54.229.164.147,2053,IE,Amazoncom Inc
-159.69.162.184,43443,IE,Inter Connects Inc
 159.69.162.184,43333,IE,SA
