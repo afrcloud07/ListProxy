@@ -1,5 +1,5 @@
-176.97.74.41,8443,EE,IROKO Networks Corporation
 176.97.74.41,2053,EE,IROKO Networks Corporation
+176.97.74.41,8443,EE,IROKO Networks Corporation
 138.124.4.38,443,EE,Baykov Ilya Sergeevich
 80.79.123.100,443,EE,Aktsiaselts WaveCom
 5.101.180.125,8443,EE,Network for hosting services
