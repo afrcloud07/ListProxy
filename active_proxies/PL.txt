@@ -10,10 +10,10 @@
 178.255.46.176,443,PL,Artnet Sp z oo
 95.164.90.133,443,PL,Netassist Limited
 151.115.61.151,2053,PL,Warsaw Poland
-80.211.249.68,2053,PL,Aruba SpA Cloud Services PL1
-80.211.249.240,8443,PL,Aruba SpA Cloud Services PL1
 80.211.249.240,2053,PL,Aruba SpA Cloud Services PL1
+80.211.249.240,8443,PL,Aruba SpA Cloud Services PL1
 80.211.249.68,8443,PL,Aruba SpA Cloud Services PL1
+80.211.249.68,2053,PL,Aruba SpA Cloud Services PL1
 45.144.49.146,443,PL,Newserverlife LLC
 45.144.50.4,443,PL,Newserverlife LLC
 45.144.51.139,8443,PL,Newserverlife LLC
@@ -30,4 +30,4 @@
 188.116.40.37,443,PL,Artnet Sp z oo
 145.239.85.117,8443,PL,OVH VPS WAW
 37.252.6.119,443,PL,IROKO Networks Corporation
-91.149.253.249,443,PL,BGNETWORK
+91.149.253.249,443,PL,Cloudflare London LLC
