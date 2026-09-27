@@ -1,8 +1,8 @@
 91.192.102.55,443,CH,Datasource AG
 140.238.208.210,443,CH,Oracle Public Cloud
-91.245.225.79,2053,CH,GLB Bulut Teknolojisi Limited Sirketi
-91.245.225.69,443,CH,GLB Bulut Teknolojisi Limited Sirketi
 91.245.225.79,8443,CH,GLB Bulut Teknolojisi Limited Sirketi
+91.245.225.69,443,CH,GLB Bulut Teknolojisi Limited Sirketi
+91.245.225.79,2053,CH,GLB Bulut Teknolojisi Limited Sirketi
 91.90.193.24,443,CH,Friendhosting LTD
 176.10.125.114,443,CH,Datasource AG
 194.147.173.116,443,CH,Trueb AG
@@ -13,8 +13,8 @@
 185.195.69.200,8443,CH,Datasource AG
 185.195.69.209,2053,CH,Datasource AG
 45.85.93.49,443,CH,Internet Utilities Europe and Asia Limited
-45.90.58.58,81,CH,Green Floid LLC
 38.180.85.203,443,CH,3NT SOLUTIONS LLP
+45.90.58.58,81,CH,Green Floid LLC
 45.95.232.18,8443,CH,GLOBAL CONNECTIVITY SOLUTIONS LLP
 45.95.232.18,2053,CH,GLOBAL CONNECTIVITY SOLUTIONS LLP
 16.63.207.85,443,CH,Amazon Data Services Switzerland

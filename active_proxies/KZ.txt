@@ -2,8 +2,6 @@
 77.243.80.224,443,KZ,PS Internet Company LLP
 79.142.51.162,65000,KZ,SMARTNET TOO
 195.210.47.233,8443,KZ,PS Internet Company LLP
-45.136.57.82,2053,KZ,Megahost Kazakhstan TOO
-45.136.57.82,8443,KZ,Megahost Kazakhstan TOO
 83.97.77.63,8443,KZ,Webstudio Onelab LLP
 83.97.77.63,2053,KZ,Webstudio Onelab LLP
 195.49.215.254,8443,KZ,PS Internet Company LLP
