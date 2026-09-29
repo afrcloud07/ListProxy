@@ -37,4 +37,3 @@
 158.101.152.6,2919,JP,Oracle Public Cloud
 158.101.154.245,47001,JP,Oracle Public Cloud
 158.101.76.55,21953,JP,Oracle Public Cloud
-160.248.7.177,443,JP,Server Hosting Service NTTPCCommunicationsInc
