@@ -8,7 +8,6 @@
 132.145.127.203,2053,JP,Oracle Public Cloud
 64.110.104.30,443,JP,Oracle Corporation
 168.138.212.80,443,JP,Oracle Public Cloud
-140.238.50.134,443,JP,Oracle Public Cloud
 47.74.8.30,2443,JP,Alibaba Cloud JP
 150.230.214.172,16957,JP,Oracle Corporation
 131.186.63.89,11655,JP,Oracle Public Cloud
@@ -34,4 +33,3 @@
 45.32.49.72,9443,JP,Vultr Holdings LLC
 158.101.154.245,47001,JP,Oracle Public Cloud
 158.101.76.55,21953,JP,Oracle Public Cloud
-160.248.7.177,443,JP,Server Hosting Service NTTPCCommunicationsInc
