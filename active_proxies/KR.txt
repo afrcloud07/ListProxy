@@ -1,13 +1,12 @@
 61.85.1.77,12150,KR,Korea Telecom
 140.245.65.122,443,KR,Oracle Corporation
-140.245.72.83,443,KR,Oracle Corporation
 144.24.73.232,443,KR,Oracle Corp UK Ltd
 131.186.24.124,587,KR,Oracle Public Cloud
 132.145.84.148,39567,KR,Oracle Public Cloud
 132.226.21.116,6056,KR,Oracle Public Cloud
 138.2.122.191,443,KR,Oracle Corporation
+141.164.35.158,443,KR,The Constant Company LLC
 152.67.211.114,58337,KR,Oracle Public Cloud
-141.164.48.141,443,KR,The Constant Company LLC
 140.238.5.75,13644,KR,Oracle Public Cloud
 144.24.87.69,50001,KR,Oracle Corp UK Ltd
 152.69.229.175,22558,KR,Oracle Corporation
