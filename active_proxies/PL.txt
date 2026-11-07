@@ -4,8 +4,8 @@
 70.34.244.250,53062,PL,The Constant Company LLC
 103.167.234.26,443,PL,Albanian Hosting SHPK ta AlbHost SHPK
 178.255.46.176,443,PL,Artnet Sp z oo
-95.164.90.133,443,PL,Netassist Limited
 151.115.61.151,2053,PL,Warsaw Poland
+95.164.90.133,443,PL,Netassist Limited
 70.34.243.123,443,PL,The Constant Company LLC
 45.144.49.146,443,PL,Newserverlife LLC
 45.144.50.4,443,PL,Newserverlife LLC
