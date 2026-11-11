@@ -1,8 +1,5 @@
-45.80.208.204,8443,KZ,GCore Labs Customer assignment
 77.243.80.224,443,KZ,PS Internet Company LLP
 79.142.51.162,65000,KZ,SMARTNET TOO
-45.136.57.82,8443,KZ,Megahost Kazakhstan TOO
-45.136.57.82,2053,KZ,Megahost Kazakhstan TOO
 213.148.10.155,2053,KZ,Modern Server Solutions LLP
 213.148.10.155,443,KZ,Modern Server Solutions LLP
 38.180.38.137,443,KZ,3NT SOLUTIONS LLP

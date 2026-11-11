@@ -6,6 +6,7 @@
 132.226.21.116,6056,KR,Oracle Public Cloud
 138.2.122.191,443,KR,Oracle Corporation
 152.67.211.114,58337,KR,Oracle Public Cloud
+141.164.48.141,443,KR,The Constant Company LLC
 140.238.5.75,13644,KR,Oracle Public Cloud
 152.69.229.175,22558,KR,Oracle Corporation
 144.24.87.69,50001,KR,Oracle Corp UK Ltd
