@@ -1,9 +1,7 @@
-91.245.225.79,2053,CH,GLB Bulut Teknolojisi Limited Sirketi
 91.245.225.79,8443,CH,GLB Bulut Teknolojisi Limited Sirketi
 91.245.225.69,443,CH,GLB Bulut Teknolojisi Limited Sirketi
-176.10.125.114,443,CH,Datasource AG
+91.245.225.79,2053,CH,GLB Bulut Teknolojisi Limited Sirketi
 194.147.173.116,443,CH,Trueb AG
-194.147.173.117,443,CH,Trueb AG
 179.43.154.26,443,CH,PRIVATE LAYER INC
 195.141.59.27,443,CH,Trueb AG
 185.195.69.200,8443,CH,Datasource AG
