@@ -15,7 +15,7 @@ const CONFIG = {
         json: 'proxyip.json',
         txt: 'proxyip.txt',
         csv: 'proxyip.csv',
-        input: 'raw.json'
+        input: 'source.json'
     }
 };
 
