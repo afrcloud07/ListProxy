@@ -5,6 +5,6 @@
 212.227.90.142,443,ES,IONOS SE
 93.93.119.91,443,ES,ARSYS INTERNET SLU
 185.232.205.33,443,ES,HUIZE LTD
-2.56.221.72,81,ES,GCore Labs Customer assignment
 34.175.202.195,443,ES,Google LLC
 95.85.89.70,81,ES,GCore Labs Customer assignment
+2.56.221.72,81,ES,GCore Labs Customer assignment
