@@ -2,7 +2,7 @@
 38.180.216.120,443,EE,3NT SOLUTIONS LLP
 176.97.74.41,2053,EE,3NT Solutions LLP
 176.97.74.41,8443,EE,3NT Solutions LLP
-185.36.141.81,443,EE,Brainoza OU
 80.79.123.100,443,EE,Aktsiaselts WaveCom
 5.101.180.125,8443,EE,Network for hosting services
 5.101.180.125,2053,EE,Network for hosting services
+185.36.141.81,443,EE,Brainoza OU
